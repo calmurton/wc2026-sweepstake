@@ -1,0 +1,45 @@
+name: Refresh Scores
+
+on:
+  schedule:
+    # Runs every 15 minutes during World Cup hours (07:00–02:00 UTC covers all kick-off windows)
+    # GitHub Actions cron runs in UTC. Matches kick off as early as 16:00 UTC and as late as 01:00 UTC.
+    - cron: '*/15 * * * *'
+  workflow_dispatch:  # allows manual trigger from the Actions tab
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          # Use a token so the push later triggers Netlify's deploy webhook
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run refresh script
+        env:
+          FOOTBALL_API_KEY: ${{ secrets.FOOTBALL_API_KEY }}
+        run: python refresh.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sweepstake_dashboard.html
+          # Only commit if there are actual changes
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: refresh scores [skip ci]"
+            git push
+          fi
