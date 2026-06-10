@@ -148,7 +148,7 @@ def patch_html(html_path, new_scores, new_scorers, refreshed_iso):
     data["embeddedScores"] = new_scores
     data["topScorers"] = new_scorers
     data["lastRefreshed"] = refreshed_iso
-    embedded_scores["999"] = {"h": 1, "a": 0}  # test entry
+    
 
     new_data_str = "const DATA = " + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + ";"
     new_content = content[:match.start()] + new_data_str + content[match.end():]
@@ -189,6 +189,7 @@ def main():
     html_fixtures = data.get("fixtures", [])
 
     embedded_scores = build_embedded_scores(api_scores, html_fixtures)
+    embedded_scores["999"] = {"h": 1, "a": 0}  # test entry
     refreshed_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     patch_html(HTML_FILE, embedded_scores, scorers, refreshed_iso)
