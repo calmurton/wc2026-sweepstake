@@ -20,7 +20,7 @@ if not API_KEY:
     print("ERROR: FOOTBALL_API_KEY environment variable not set.")
     sys.exit(1)
 
-HTML_FILE = "sweepstake_dashboard.html"
+HTML_FILE = "index.html"
 
 # football-data.org competition ID for FIFA World Cup 2026
 # WC = 2000 on football-data.org (same ID used for every World Cup)
