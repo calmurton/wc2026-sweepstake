@@ -1,10 +1,5 @@
 name: Update World Cup scores
 
-# Runs every 20 minutes during the tournament window (UTC).
-# World Cup 2026 runs 11 Jun – 19 Jul. Outside that window the workflow is dormant.
-#
-# Manual trigger ("Run workflow" button) always works regardless of date.
-
 on:
   schedule:
     - cron: '*/20 * * * *'
@@ -45,7 +40,7 @@ jobs:
       - name: Fetch scores from football-data.org
         if: steps.window.outputs.skip == 'false'
         env:
-          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_DATA_TOKEN }}
+          FOOTBALL_DATA_TOKEN: ${{ secrets.FOOTBALL_API_KEY }}
         run: python scripts/fetch_scores.py
 
       - name: Commit and push if changed
@@ -54,4 +49,9 @@ jobs:
           git config user.name "World Cup Bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/scores.json data/top-scorers.json data/last-updated.json
-          if git
+          if git diff --cached --quiet; then
+            echo "No score changes detected."
+          else
+            git commit -m "Auto-update scores [$(date -u +%Y-%m-%dT%H:%MZ)]"
+            git push
+          fi
