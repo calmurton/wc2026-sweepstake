@@ -80,9 +80,10 @@
     text-align: right;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    line-height: 1.4;
+    line-height: 1.6;
   }
   .last-refresh .when { color: var(--gold); font-weight: 600; }
+  .last-refresh .countdown { font-family: 'JetBrains Mono', monospace; letter-spacing: 0.06em; }
   .btn {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -287,8 +288,7 @@
     border: 1px solid var(--border-soft);
     border-radius: 10px;
     padding: 14px 16px;
-    cursor: default;
-    transition: border-color 0.15s, transform 0.15s;
+    transition: border-color 0.15s;
   }
   .fixture-meta {
     display: flex; justify-content: space-between;
@@ -408,53 +408,6 @@
   .total-pot .lbl { font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 0.06em; }
   .total-pot .amt { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--gold); }
 
-  /* ──── Modal ──── */
-  .modal-back {
-    position: fixed; inset: 0;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(4px);
-    display: none;
-    align-items: center; justify-content: center;
-    z-index: 100;
-    padding: 24px;
-  }
-  .modal-back.open { display: flex; }
-  .modal {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 28px;
-    width: 100%; max-width: 480px;
-  }
-  .modal h3 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 22px; letter-spacing: 0.04em;
-    margin-bottom: 6px;
-  }
-  .modal .modal-sub { color: var(--text-muted); font-size: 13px; margin-bottom: 20px; }
-  .score-input-row {
-    display: grid; grid-template-columns: 1fr auto 1fr;
-    gap: 16px; align-items: center;
-    margin: 24px 0;
-  }
-  .team-block { text-align: center; }
-  .team-block .flag { font-size: 36px; margin-bottom: 8px; }
-  .team-block .name { font-weight: 600; font-size: 14px; }
-  .team-block .input {
-    margin-top: 12px;
-    width: 80px; height: 64px;
-    background: var(--bg-2);
-    border: 1px solid var(--border);
-    color: var(--text);
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px; text-align: center;
-    border-radius: 8px;
-    margin-inline: auto; display: block;
-  }
-  .team-block .input:focus { outline: none; border-color: var(--gold); }
-  .vs-tag { color: var(--text-muted); font-family: 'Bebas Neue', sans-serif; font-size: 20px; }
-  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
-
   /* ──── Filters ──── */
   .filters {
     display: flex; gap: 10px; flex-wrap: wrap;
@@ -514,7 +467,7 @@
   }
   @media print {
     body { background: white; color: black; }
-    .topbar, .filters, .modal-back, .toast { display: none !important; }
+    .topbar, .filters, .toast { display: none !important; }
     .panel { display: block !important; }
   }
 </style>
@@ -527,7 +480,6 @@
       <div class="brand-mark">🏆</div>
       <div class="brand-text">
         <h1>World Cup 2026 Sweepstake</h1>
-
       </div>
     </div>
     <div class="topbar-actions">
@@ -670,6 +622,7 @@
       <p style="margin-bottom: 12px;"><strong style="color: var(--text);">Golden Boot Team:</strong> Whichever team the tournament's top individual goalscorer plays for. If two players tie on goals, the official FIFA tiebreakers apply (assists, then fewer minutes played).</p>
       <p style="margin-bottom: 12px;"><strong style="color: var(--text);">Heaviest Defeat:</strong> The team that lost a single match by the biggest margin. Tiebreaker: most goals conceded in that match.</p>
       <p style="margin-bottom: 12px;"><strong style="color: var(--text);">Wooden Spoon:</strong> Worst group-stage performance — fewest points, then worst goal difference, then fewest goals scored.</p>
+      <p style="margin-bottom: 0;"><strong style="color: var(--text);">Updating scores:</strong> Scores update automatically every 20 minutes via the GitHub Action. The "Last refreshed" timestamp in the top-right shows when the last update ran.</p>
       <p style="margin-bottom: 0;"><strong style="color: var(--text);">Early indicators on the prize board:</strong> Before there's enough data to crown a live leader, the Winner, Second Place, Golden Boot and Wooden Spoon lanes show the bookmaker favourite — marked with a blue "Odds favourite" pill. Once the tournament produces a calculated leader from match results, that lane switches to the green "Live leader" pill. Heaviest Defeat has no bookmaker market — it stays blank until the first result that produces a meaningful margin.</p>
     </div>
   </section>
@@ -680,7 +633,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const DATA = {"lastRefreshed":"2026-06-11T21:30:05Z","embeddedScores":{},"topScorer":null,"topScorers":[],"oddsFavourites":{"winner":{"team":"Spain","odds":"5/1","src":"Consensus UK books, 10 Jun 2026"},"runnerup":{"team":"France","odds":"5/1","src":"Outright second-favourite"},"goldenboot":{"name":"Kylian Mbappé","team":"France","odds":"6/1","src":"bet365"},"spoon":{"team":"Curaçao","odds":"n/a","src":"Lowest-ranked debutant in toughest group (H)"}},"entrants":[{"name":"Adam Jones","team":"Brazil"},{"name":"Alexander Symonds","team":"Netherlands"},{"name":"Barry Wheeler","team":"Tunisia"},{"name":"Becky King","team":"England"},{"name":"Ben Hunter","team":"Morocco"},{"name":"Callum Murton","team":"Egypt"},{"name":"Charlie Loy","team":"Belgium"},{"name":"Chris Boot-Handford","team":"Portugal"},{"name":"Claire Gaughan","team":"Saudi Arabia"},{"name":"Daniel Foode","team":"Haiti"},{"name":"David Rylance","team":"Scotland"},{"name":"Delwar Hussain","team":"Qatar"},{"name":"Denise Maskew","team":"Croatia"},{"name":"Edward Forbes","team":"New Zealand"},{"name":"Eloise Wann","team":"Turkey"},{"name":"Helen Smith","team":"Ghana"},{"name":"James Cafferty","team":"Curaçao"},{"name":"Jonathan Martin","team":"Colombia"},{"name":"Joseph Jackson","team":"Cape Verde"},{"name":"Josh Maqsood","team":"Uruguay"},{"name":"Kathy Gwinnett","team":"Algeria"},{"name":"Kyle Hall","team":"Bosnia and Herzegovina"},{"name":"Liam Gallagher","team":"Iraq"},{"name":"Lisa Carroll","team":"Panama"},{"name":"Machala King","team":"Sweden"},{"name":"Mark Best","team":"Paraguay"},{"name":"Mark Trussler","team":"Mexico"},{"name":"Matthew Walker","team":"Spain"},{"name":"Michael Walsh","team":"Japan"},{"name":"Nayel Iqbal","team":"Senegal"},{"name":"Nicola Mcdermott","team":"South Korea"},{"name":"Peter Sherlock","team":"Argentina"},{"name":"Philip White","team":"France"},{"name":"Robert Coyle","team":"Uzbekistan"},{"name":"Robyn Knowles","team":"Australia"},{"name":"Sam Lawrence","team":"Ivory Coast"},{"name":"Sarah Cleavely","team":"Germany"},{"name":"Sarah Gallacher","team":"Switzerland"},{"name":"Sarah Hill","team":"Norway"},{"name":"Sarah Martin","team":"USA"},{"name":"Shagufta Hussain","team":"Austria"},{"name":"Stephen Wilthew","team":"Iran"},{"name":"Stuart Birkett","team":"Ecuador"},{"name":"Suleman Patel","team":"Jordan"},{"name":"Suzie Rawlinson","team":"Czech Republic"},{"name":"TJ Crerar","team":"South Africa"},{"name":"Toby Hands","team":"DR Congo"},{"name":"Toby Sykes","team":"Canada"}],"groups":{"A":["Mexico","South Africa","South Korea","Czech Republic"],"B":["Canada","Bosnia and Herzegovina","Qatar","Switzerland"],"C":["Brazil","Morocco","Haiti","Scotland"],"D":["USA","Paraguay","Australia","Turkey"],"E":["Germany","Curaçao","Ivory Coast","Ecuador"],"F":["Netherlands","Japan","Sweden","Tunisia"],"G":["Belgium","Egypt","Iran","New Zealand"],"H":["Spain","Cape Verde","Saudi Arabia","Uruguay"],"I":["France","Senegal","Iraq","Norway"],"J":["Argentina","Algeria","Austria","Jordan"],"K":["Portugal","DR Congo","Uzbekistan","Colombia"],"L":["England","Croatia","Ghana","Panama"]},"flags":{"Algeria":"dz","Argentina":"ar","Australia":"au","Austria":"at","Belgium":"be","Bosnia and Herzegovina":"ba","Brazil":"br","Canada":"ca","Cape Verde":"cv","Colombia":"co","Croatia":"hr","Curaçao":"cw","Czech Republic":"cz","DR Congo":"cd","Ecuador":"ec","Egypt":"eg","England":"gb-eng","France":"fr","Germany":"de","Ghana":"gh","Haiti":"ht","Iran":"ir","Iraq":"iq","Ivory Coast":"ci","Japan":"jp","Jordan":"jo","Mexico":"mx","Morocco":"ma","Netherlands":"nl","New Zealand":"nz","Norway":"no","Panama":"pa","Paraguay":"py","Portugal":"pt","Qatar":"qa","Saudi Arabia":"sa","Scotland":"gb-sct","Senegal":"sn","South Africa":"za","South Korea":"kr","Spain":"es","Sweden":"se","Switzerland":"ch","Tunisia":"tn","Turkey":"tr","USA":"us","Uruguay":"uy","Uzbekistan":"uz"},"fixtures":[{"id":1,"stage":"group","group":"A","kickoffUTC":"2026-06-11T19:00:00Z","home":"Mexico","away":"South Africa","venue":"Estadio Azteca, Mexico City"},{"id":2,"stage":"group","group":"A","kickoffUTC":"2026-06-12T02:00:00Z","home":"South Korea","away":"Czech Republic","venue":"Estadio Akron, Zapopan"},{"id":3,"stage":"group","group":"B","kickoffUTC":"2026-06-12T19:00:00Z","home":"Canada","away":"Bosnia and Herzegovina","venue":"BMO Field, Toronto"},{"id":4,"stage":"group","group":"D","kickoffUTC":"2026-06-13T01:00:00Z","home":"USA","away":"Paraguay","venue":"SoFi Stadium, Inglewood"},{"id":5,"stage":"group","group":"B","kickoffUTC":"2026-06-13T19:00:00Z","home":"Qatar","away":"Switzerland","venue":"Levi's Stadium, Santa Clara"},{"id":6,"stage":"group","group":"C","kickoffUTC":"2026-06-13T22:00:00Z","home":"Brazil","away":"Morocco","venue":"MetLife Stadium, East Rutherford"},{"id":7,"stage":"group","group":"C","kickoffUTC":"2026-06-14T01:00:00Z","home":"Haiti","away":"Scotland","venue":"Gillette Stadium, Foxborough"},{"id":8,"stage":"group","group":"D","kickoffUTC":"2026-06-14T04:00:00Z","home":"Australia","away":"Turkey","venue":"BC Place, Vancouver"},{"id":9,"stage":"group","group":"E","kickoffUTC":"2026-06-14T17:00:00Z","home":"Germany","away":"Curaçao","venue":"NRG Stadium, Houston"},{"id":10,"stage":"group","group":"F","kickoffUTC":"2026-06-14T20:00:00Z","home":"Netherlands","away":"Japan","venue":"AT&T Stadium, Arlington"},{"id":11,"stage":"group","group":"E","kickoffUTC":"2026-06-14T23:00:00Z","home":"Ivory Coast","away":"Ecuador","venue":"Lincoln Financial Field, Philadelphia"},{"id":12,"stage":"group","group":"F","kickoffUTC":"2026-06-15T02:00:00Z","home":"Sweden","away":"Tunisia","venue":"Estadio BBVA, Monterrey"},{"id":13,"stage":"group","group":"H","kickoffUTC":"2026-06-15T16:00:00Z","home":"Spain","away":"Cape Verde","venue":"Mercedes-Benz Stadium, Atlanta"},{"id":14,"stage":"group","group":"G","kickoffUTC":"2026-06-15T19:00:00Z","home":"Belgium","away":"Egypt","venue":"Lumen Field, Seattle"},{"id":15,"stage":"group","group":"H","kickoffUTC":"2026-06-15T22:00:00Z","home":"Saudi Arabia","away":"Uruguay","venue":"Hard Rock Stadium, Miami Gardens"},{"id":16,"stage":"group","group":"G","kickoffUTC":"2026-06-16T01:00:00Z","home":"Iran","away":"New Zealand","venue":"SoFi Stadium, Inglewood"},{"id":17,"stage":"group","group":"I","kickoffUTC":"2026-06-16T19:00:00Z","home":"France","away":"Senegal","venue":"MetLife Stadium, East Rutherford"},{"id":18,"stage":"group","group":"I","kickoffUTC":"2026-06-16T22:00:00Z","home":"Iraq","away":"Norway","venue":"Gillette Stadium, Foxborough"},{"id":19,"stage":"group","group":"J","kickoffUTC":"2026-06-17T01:00:00Z","home":"Argentina","away":"Algeria","venue":"Arrowhead Stadium, Kansas City"},{"id":20,"stage":"group","group":"J","kickoffUTC":"2026-06-17T04:00:00Z","home":"Austria","away":"Jordan","venue":"Levi's Stadium, Santa Clara"},{"id":21,"stage":"group","group":"K","kickoffUTC":"2026-06-17T17:00:00Z","home":"Portugal","away":"DR Congo","venue":"NRG Stadium, Houston"},{"id":22,"stage":"group","group":"L","kickoffUTC":"2026-06-17T20:00:00Z","home":"England","away":"Croatia","venue":"AT&T Stadium, Arlington"},{"id":23,"stage":"group","group":"L","kickoffUTC":"2026-06-17T23:00:00Z","home":"Ghana","away":"Panama","venue":"BMO Field, Toronto"},{"id":24,"stage":"group","group":"K","kickoffUTC":"2026-06-18T02:00:00Z","home":"Uzbekistan","away":"Colombia","venue":"Estadio Azteca, Mexico City"},{"id":25,"stage":"group","group":"A","kickoffUTC":"2026-06-18T16:00:00Z","home":"Czech Republic","away":"South Africa","venue":"Mercedes-Benz Stadium, Atlanta"},{"id":26,"stage":"group","group":"B","kickoffUTC":"2026-06-18T19:00:00Z","home":"Switzerland","away":"Bosnia and Herzegovina","venue":"SoFi Stadium, Inglewood"},{"id":27,"stage":"group","group":"B","kickoffUTC":"2026-06-18T22:00:00Z","home":"Canada","away":"Qatar","venue":"BC Place, Vancouver"},{"id":28,"stage":"group","group":"A","kickoffUTC":"2026-06-19T01:00:00Z","home":"Mexico","away":"South Korea","venue":"Estadio Akron, Zapopan"},{"id":29,"stage":"group","group":"D","kickoffUTC":"2026-06-19T19:00:00Z","home":"USA","away":"Australia","venue":"Lumen Field, Seattle"},{"id":30,"stage":"group","group":"C","kickoffUTC":"2026-06-19T22:00:00Z","home":"Scotland","away":"Morocco","venue":"Gillette Stadium, Foxborough"},{"id":31,"stage":"group","group":"C","kickoffUTC":"2026-06-20T00:30:00Z","home":"Brazil","away":"Haiti","venue":"Lincoln Financial Field, Philadelphia"},{"id":32,"stage":"group","group":"D","kickoffUTC":"2026-06-20T03:00:00Z","home":"Turkey","away":"Paraguay","venue":"Levi's Stadium, Santa Clara"},{"id":33,"stage":"group","group":"F","kickoffUTC":"2026-06-20T17:00:00Z","home":"Netherlands","away":"Sweden","venue":"NRG Stadium, Houston"},{"id":34,"stage":"group","group":"E","kickoffUTC":"2026-06-20T20:00:00Z","home":"Germany","away":"Ivory Coast","venue":"BMO Field, Toronto"},{"id":35,"stage":"group","group":"E","kickoffUTC":"2026-06-21T00:00:00Z","home":"Ecuador","away":"Curaçao","venue":"Arrowhead Stadium, Kansas City"},{"id":36,"stage":"group","group":"F","kickoffUTC":"2026-06-21T04:00:00Z","home":"Tunisia","away":"Japan","venue":"Estadio BBVA, Monterrey"},{"id":37,"stage":"group","group":"H","kickoffUTC":"2026-06-21T16:00:00Z","home":"Spain","away":"Saudi Arabia","venue":"Mercedes-Benz Stadium, Atlanta"},{"id":38,"stage":"group","group":"G","kickoffUTC":"2026-06-21T19:00:00Z","home":"Belgium","away":"Iran","venue":"SoFi Stadium, Inglewood"},{"id":39,"stage":"group","group":"H","kickoffUTC":"2026-06-21T22:00:00Z","home":"Uruguay","away":"Cape Verde","venue":"Hard Rock Stadium, Miami Gardens"},{"id":40,"stage":"group","group":"G","kickoffUTC":"2026-06-22T01:00:00Z","home":"New Zealand","away":"Egypt","venue":"BC Place, Vancouver"},{"id":41,"stage":"group","group":"J","kickoffUTC":"2026-06-22T17:00:00Z","home":"Argentina","away":"Austria","venue":"AT&T Stadium, Arlington"},{"id":42,"stage":"group","group":"I","kickoffUTC":"2026-06-22T21:00:00Z","home":"France","away":"Iraq","venue":"Lincoln Financial Field, Philadelphia"},{"id":43,"stage":"group","group":"I","kickoffUTC":"2026-06-23T00:00:00Z","home":"Norway","away":"Senegal","venue":"MetLife Stadium, East Rutherford"},{"id":44,"stage":"group","group":"J","kickoffUTC":"2026-06-23T03:00:00Z","home":"Jordan","away":"Algeria","venue":"Levi's Stadium, Santa Clara"},{"id":45,"stage":"group","group":"K","kickoffUTC":"2026-06-23T17:00:00Z","home":"Portugal","away":"Uzbekistan","venue":"NRG Stadium, Houston"},{"id":46,"stage":"group","group":"L","kickoffUTC":"2026-06-23T20:00:00Z","home":"England","away":"Ghana","venue":"Gillette Stadium, Foxborough"},{"id":47,"stage":"group","group":"L","kickoffUTC":"2026-06-23T23:00:00Z","home":"Panama","away":"Croatia","venue":"BMO Field, Toronto"},{"id":48,"stage":"group","group":"K","kickoffUTC":"2026-06-24T02:00:00Z","home":"Colombia","away":"DR Congo","venue":"Estadio Akron, Zapopan"},{"id":49,"stage":"group","group":"B","kickoffUTC":"2026-06-24T19:00:00Z","home":"Switzerland","away":"Canada","venue":"BC Place, Vancouver"},{"id":50,"stage":"group","group":"B","kickoffUTC":"2026-06-24T19:00:00Z","home":"Bosnia and Herzegovina","away":"Qatar","venue":"Lumen Field, Seattle"},{"id":51,"stage":"group","group":"C","kickoffUTC":"2026-06-24T22:00:00Z","home":"Scotland","away":"Brazil","venue":"Hard Rock Stadium, Miami Gardens"},{"id":52,"stage":"group","group":"C","kickoffUTC":"2026-06-24T22:00:00Z","home":"Morocco","away":"Haiti","venue":"Mercedes-Benz Stadium, Atlanta"},{"id":53,"stage":"group","group":"A","kickoffUTC":"2026-06-25T01:00:00Z","home":"Czech Republic","away":"Mexico","venue":"Estadio Azteca, Mexico City"},{"id":54,"stage":"group","group":"A","kickoffUTC":"2026-06-25T01:00:00Z","home":"South Africa","away":"South Korea","venue":"Estadio BBVA, Monterrey"},{"id":55,"stage":"group","group":"E","kickoffUTC":"2026-06-25T20:00:00Z","home":"Curaçao","away":"Ivory Coast","venue":"Lincoln Financial Field, Philadelphia"},{"id":56,"stage":"group","group":"E","kickoffUTC":"2026-06-25T20:00:00Z","home":"Ecuador","away":"Germany","venue":"MetLife Stadium, East Rutherford"},{"id":57,"stage":"group","group":"F","kickoffUTC":"2026-06-25T23:00:00Z","home":"Japan","away":"Sweden","venue":"AT&T Stadium, Arlington"},{"id":58,"stage":"group","group":"F","kickoffUTC":"2026-06-25T23:00:00Z","home":"Tunisia","away":"Netherlands","venue":"Arrowhead Stadium, Kansas City"},{"id":59,"stage":"group","group":"D","kickoffUTC":"2026-06-26T02:00:00Z","home":"Turkey","away":"USA","venue":"SoFi Stadium, Inglewood"},{"id":60,"stage":"group","group":"D","kickoffUTC":"2026-06-26T02:00:00Z","home":"Paraguay","away":"Australia","venue":"Levi's Stadium, Santa Clara"},{"id":61,"stage":"group","group":"I","kickoffUTC":"2026-06-26T19:00:00Z","home":"Norway","away":"France","venue":"Gillette Stadium, Foxborough"},{"id":62,"stage":"group","group":"I","kickoffUTC":"2026-06-26T19:00:00Z","home":"Senegal","away":"Iraq","venue":"BMO Field, Toronto"},{"id":63,"stage":"group","group":"H","kickoffUTC":"2026-06-27T00:00:00Z","home":"Cape Verde","away":"Saudi Arabia","venue":"NRG Stadium, Houston"},{"id":64,"stage":"group","group":"H","kickoffUTC":"2026-06-27T00:00:00Z","home":"Uruguay","away":"Spain","venue":"Estadio Akron, Zapopan"},{"id":65,"stage":"group","group":"G","kickoffUTC":"2026-06-27T03:00:00Z","home":"Egypt","away":"Iran","venue":"Lumen Field, Seattle"},{"id":66,"stage":"group","group":"G","kickoffUTC":"2026-06-27T03:00:00Z","home":"New Zealand","away":"Belgium","venue":"BC Place, Vancouver"},{"id":67,"stage":"group","group":"L","kickoffUTC":"2026-06-27T21:00:00Z","home":"Panama","away":"England","venue":"MetLife Stadium, East Rutherford"},{"id":68,"stage":"group","group":"L","kickoffUTC":"2026-06-27T21:00:00Z","home":"Croatia","away":"Ghana","venue":"Lincoln Financial Field, Philadelphia"},{"id":69,"stage":"group","group":"K","kickoffUTC":"2026-06-27T23:30:00Z","home":"Colombia","away":"Portugal","venue":"Hard Rock Stadium, Miami Gardens"},{"id":70,"stage":"group","group":"K","kickoffUTC":"2026-06-27T23:30:00Z","home":"DR Congo","away":"Uzbekistan","venue":"Mercedes-Benz Stadium, Atlanta"},{"id":71,"stage":"group","group":"J","kickoffUTC":"2026-06-28T02:00:00Z","home":"Algeria","away":"Austria","venue":"Arrowhead Stadium, Kansas City"},{"id":72,"stage":"group","group":"J","kickoffUTC":"2026-06-28T02:00:00Z","home":"Jordan","away":"Argentina","venue":"AT&T Stadium, Arlington"}],"prizes":[{"id":"winner","label":"Winner","amount":125,"icon":"🏆"},{"id":"runnerup","label":"Second Place","amount":60,"icon":"🥈"},{"id":"goldenboot","label":"Golden Boot Team","amount":15,"icon":"⚽"},{"id":"heaviest","label":"Heaviest Defeat","amount":20,"icon":"💥"},{"id":"spoon","label":"Wooden Spoon","amount":20,"icon":"🥄"}]};
+const DATA = {"lastRefreshed": "2026-06-11T21:31:23Z", "embeddedScores": {}, "topScorer": null, "topScorers": [], "oddsFavourites": {"winner": {"team": "Spain", "odds": "5/1", "src": "Consensus UK books, 10 Jun 2026"}, "runnerup": {"team": "France", "odds": "5/1", "src": "Outright second-favourite"}, "goldenboot": {"name": "Kylian Mbappé", "team": "France", "odds": "6/1", "src": "bet365"}, "spoon": {"team": "Curaçao", "odds": "n/a", "src": "Lowest-ranked debutant in toughest group (H)"}}, "entrants": [{"name": "Adam Jones", "team": "Brazil"}, {"name": "Alexander Symonds", "team": "Netherlands"}, {"name": "Barry Wheeler", "team": "Tunisia"}, {"name": "Becky King", "team": "England"}, {"name": "Ben Hunter", "team": "Morocco"}, {"name": "Callum Murton", "team": "Egypt"}, {"name": "Charlie Loy", "team": "Belgium"}, {"name": "Chris Boot-Handford", "team": "Portugal"}, {"name": "Claire Gaughan", "team": "Saudi Arabia"}, {"name": "Daniel Foode", "team": "Haiti"}, {"name": "David Rylance", "team": "Scotland"}, {"name": "Delwar Hussain", "team": "Qatar"}, {"name": "Denise Maskew", "team": "Croatia"}, {"name": "Edward Forbes", "team": "New Zealand"}, {"name": "Eloise Wann", "team": "Turkey"}, {"name": "Helen Smith", "team": "Ghana"}, {"name": "James Cafferty", "team": "Curaçao"}, {"name": "Jonathan Martin", "team": "Colombia"}, {"name": "Joseph Jackson", "team": "Cape Verde"}, {"name": "Josh Maqsood", "team": "Uruguay"}, {"name": "Kathy Gwinnett", "team": "Algeria"}, {"name": "Kyle Hall", "team": "Bosnia and Herzegovina"}, {"name": "Liam Gallagher", "team": "Iraq"}, {"name": "Lisa Carroll", "team": "Panama"}, {"name": "Machala King", "team": "Sweden"}, {"name": "Mark Best", "team": "Paraguay"}, {"name": "Mark Trussler", "team": "Mexico"}, {"name": "Matthew Walker", "team": "Spain"}, {"name": "Michael Walsh", "team": "Japan"}, {"name": "Nayel Iqbal", "team": "Senegal"}, {"name": "Nicola Mcdermott", "team": "South Korea"}, {"name": "Peter Sherlock", "team": "Argentina"}, {"name": "Philip White", "team": "France"}, {"name": "Robert Coyle", "team": "Uzbekistan"}, {"name": "Robyn Knowles", "team": "Australia"}, {"name": "Sam Lawrence", "team": "Ivory Coast"}, {"name": "Sarah Cleavely", "team": "Germany"}, {"name": "Sarah Gallacher", "team": "Switzerland"}, {"name": "Sarah Hill", "team": "Norway"}, {"name": "Sarah Martin", "team": "USA"}, {"name": "Shagufta Hussain", "team": "Austria"}, {"name": "Stephen Wilthew", "team": "Iran"}, {"name": "Stuart Birkett", "team": "Ecuador"}, {"name": "Suleman Patel", "team": "Jordan"}, {"name": "Suzie Rawlinson", "team": "Czech Republic"}, {"name": "TJ Crerar", "team": "South Africa"}, {"name": "Toby Hands", "team": "DR Congo"}, {"name": "Toby Sykes", "team": "Canada"}], "groups": {"A": ["Mexico", "South Africa", "South Korea", "Czech Republic"], "B": ["Canada", "Bosnia and Herzegovina", "Qatar", "Switzerland"], "C": ["Brazil", "Morocco", "Haiti", "Scotland"], "D": ["USA", "Paraguay", "Australia", "Turkey"], "E": ["Germany", "Curaçao", "Ivory Coast", "Ecuador"], "F": ["Netherlands", "Japan", "Sweden", "Tunisia"], "G": ["Belgium", "Egypt", "Iran", "New Zealand"], "H": ["Spain", "Cape Verde", "Saudi Arabia", "Uruguay"], "I": ["France", "Senegal", "Iraq", "Norway"], "J": ["Argentina", "Algeria", "Austria", "Jordan"], "K": ["Portugal", "DR Congo", "Uzbekistan", "Colombia"], "L": ["England", "Croatia", "Ghana", "Panama"]}, "flags": {"Algeria": "dz", "Argentina": "ar", "Australia": "au", "Austria": "at", "Belgium": "be", "Bosnia and Herzegovina": "ba", "Brazil": "br", "Canada": "ca", "Cape Verde": "cv", "Colombia": "co", "Croatia": "hr", "Curaçao": "cw", "Czech Republic": "cz", "DR Congo": "cd", "Ecuador": "ec", "Egypt": "eg", "England": "gb-eng", "France": "fr", "Germany": "de", "Ghana": "gh", "Haiti": "ht", "Iran": "ir", "Iraq": "iq", "Ivory Coast": "ci", "Japan": "jp", "Jordan": "jo", "Mexico": "mx", "Morocco": "ma", "Netherlands": "nl", "New Zealand": "nz", "Norway": "no", "Panama": "pa", "Paraguay": "py", "Portugal": "pt", "Qatar": "qa", "Saudi Arabia": "sa", "Scotland": "gb-sct", "Senegal": "sn", "South Africa": "za", "South Korea": "kr", "Spain": "es", "Sweden": "se", "Switzerland": "ch", "Tunisia": "tn", "Turkey": "tr", "USA": "us", "Uruguay": "uy", "Uzbekistan": "uz"}, "fixtures": [{"id": 1, "stage": "group", "group": "A", "kickoffUTC": "2026-06-11T19:00:00Z", "home": "Mexico", "away": "South Africa", "venue": "Estadio Azteca, Mexico City"}, {"id": 2, "stage": "group", "group": "A", "kickoffUTC": "2026-06-12T02:00:00Z", "home": "South Korea", "away": "Czech Republic", "venue": "Estadio Akron, Zapopan"}, {"id": 3, "stage": "group", "group": "B", "kickoffUTC": "2026-06-12T19:00:00Z", "home": "Canada", "away": "Bosnia and Herzegovina", "venue": "BMO Field, Toronto"}, {"id": 4, "stage": "group", "group": "D", "kickoffUTC": "2026-06-13T01:00:00Z", "home": "USA", "away": "Paraguay", "venue": "SoFi Stadium, Inglewood"}, {"id": 5, "stage": "group", "group": "B", "kickoffUTC": "2026-06-13T19:00:00Z", "home": "Qatar", "away": "Switzerland", "venue": "Levi's Stadium, Santa Clara"}, {"id": 6, "stage": "group", "group": "C", "kickoffUTC": "2026-06-13T22:00:00Z", "home": "Brazil", "away": "Morocco", "venue": "MetLife Stadium, East Rutherford"}, {"id": 7, "stage": "group", "group": "C", "kickoffUTC": "2026-06-14T01:00:00Z", "home": "Haiti", "away": "Scotland", "venue": "Gillette Stadium, Foxborough"}, {"id": 8, "stage": "group", "group": "D", "kickoffUTC": "2026-06-14T04:00:00Z", "home": "Australia", "away": "Turkey", "venue": "BC Place, Vancouver"}, {"id": 9, "stage": "group", "group": "E", "kickoffUTC": "2026-06-14T17:00:00Z", "home": "Germany", "away": "Curaçao", "venue": "NRG Stadium, Houston"}, {"id": 10, "stage": "group", "group": "F", "kickoffUTC": "2026-06-14T20:00:00Z", "home": "Netherlands", "away": "Japan", "venue": "AT&T Stadium, Arlington"}, {"id": 11, "stage": "group", "group": "E", "kickoffUTC": "2026-06-14T23:00:00Z", "home": "Ivory Coast", "away": "Ecuador", "venue": "Lincoln Financial Field, Philadelphia"}, {"id": 12, "stage": "group", "group": "F", "kickoffUTC": "2026-06-15T02:00:00Z", "home": "Sweden", "away": "Tunisia", "venue": "Estadio BBVA, Monterrey"}, {"id": 13, "stage": "group", "group": "H", "kickoffUTC": "2026-06-15T16:00:00Z", "home": "Spain", "away": "Cape Verde", "venue": "Mercedes-Benz Stadium, Atlanta"}, {"id": 14, "stage": "group", "group": "G", "kickoffUTC": "2026-06-15T19:00:00Z", "home": "Belgium", "away": "Egypt", "venue": "Lumen Field, Seattle"}, {"id": 15, "stage": "group", "group": "H", "kickoffUTC": "2026-06-15T22:00:00Z", "home": "Saudi Arabia", "away": "Uruguay", "venue": "Hard Rock Stadium, Miami Gardens"}, {"id": 16, "stage": "group", "group": "G", "kickoffUTC": "2026-06-16T01:00:00Z", "home": "Iran", "away": "New Zealand", "venue": "SoFi Stadium, Inglewood"}, {"id": 17, "stage": "group", "group": "I", "kickoffUTC": "2026-06-16T19:00:00Z", "home": "France", "away": "Senegal", "venue": "MetLife Stadium, East Rutherford"}, {"id": 18, "stage": "group", "group": "I", "kickoffUTC": "2026-06-16T22:00:00Z", "home": "Iraq", "away": "Norway", "venue": "Gillette Stadium, Foxborough"}, {"id": 19, "stage": "group", "group": "J", "kickoffUTC": "2026-06-17T01:00:00Z", "home": "Argentina", "away": "Algeria", "venue": "Arrowhead Stadium, Kansas City"}, {"id": 20, "stage": "group", "group": "J", "kickoffUTC": "2026-06-17T04:00:00Z", "home": "Austria", "away": "Jordan", "venue": "Levi's Stadium, Santa Clara"}, {"id": 21, "stage": "group", "group": "K", "kickoffUTC": "2026-06-17T17:00:00Z", "home": "Portugal", "away": "DR Congo", "venue": "NRG Stadium, Houston"}, {"id": 22, "stage": "group", "group": "L", "kickoffUTC": "2026-06-17T20:00:00Z", "home": "England", "away": "Croatia", "venue": "AT&T Stadium, Arlington"}, {"id": 23, "stage": "group", "group": "L", "kickoffUTC": "2026-06-17T23:00:00Z", "home": "Ghana", "away": "Panama", "venue": "BMO Field, Toronto"}, {"id": 24, "stage": "group", "group": "K", "kickoffUTC": "2026-06-18T02:00:00Z", "home": "Uzbekistan", "away": "Colombia", "venue": "Estadio Azteca, Mexico City"}, {"id": 25, "stage": "group", "group": "A", "kickoffUTC": "2026-06-18T16:00:00Z", "home": "Czech Republic", "away": "South Africa", "venue": "Mercedes-Benz Stadium, Atlanta"}, {"id": 26, "stage": "group", "group": "B", "kickoffUTC": "2026-06-18T19:00:00Z", "home": "Switzerland", "away": "Bosnia and Herzegovina", "venue": "SoFi Stadium, Inglewood"}, {"id": 27, "stage": "group", "group": "B", "kickoffUTC": "2026-06-18T22:00:00Z", "home": "Canada", "away": "Qatar", "venue": "BC Place, Vancouver"}, {"id": 28, "stage": "group", "group": "A", "kickoffUTC": "2026-06-19T01:00:00Z", "home": "Mexico", "away": "South Korea", "venue": "Estadio Akron, Zapopan"}, {"id": 29, "stage": "group", "group": "D", "kickoffUTC": "2026-06-19T19:00:00Z", "home": "USA", "away": "Australia", "venue": "Lumen Field, Seattle"}, {"id": 30, "stage": "group", "group": "C", "kickoffUTC": "2026-06-19T22:00:00Z", "home": "Scotland", "away": "Morocco", "venue": "Gillette Stadium, Foxborough"}, {"id": 31, "stage": "group", "group": "C", "kickoffUTC": "2026-06-20T00:30:00Z", "home": "Brazil", "away": "Haiti", "venue": "Lincoln Financial Field, Philadelphia"}, {"id": 32, "stage": "group", "group": "D", "kickoffUTC": "2026-06-20T03:00:00Z", "home": "Turkey", "away": "Paraguay", "venue": "Levi's Stadium, Santa Clara"}, {"id": 33, "stage": "group", "group": "F", "kickoffUTC": "2026-06-20T17:00:00Z", "home": "Netherlands", "away": "Sweden", "venue": "NRG Stadium, Houston"}, {"id": 34, "stage": "group", "group": "E", "kickoffUTC": "2026-06-20T20:00:00Z", "home": "Germany", "away": "Ivory Coast", "venue": "BMO Field, Toronto"}, {"id": 35, "stage": "group", "group": "E", "kickoffUTC": "2026-06-21T00:00:00Z", "home": "Ecuador", "away": "Curaçao", "venue": "Arrowhead Stadium, Kansas City"}, {"id": 36, "stage": "group", "group": "F", "kickoffUTC": "2026-06-21T04:00:00Z", "home": "Tunisia", "away": "Japan", "venue": "Estadio BBVA, Monterrey"}, {"id": 37, "stage": "group", "group": "H", "kickoffUTC": "2026-06-21T16:00:00Z", "home": "Spain", "away": "Saudi Arabia", "venue": "Mercedes-Benz Stadium, Atlanta"}, {"id": 38, "stage": "group", "group": "G", "kickoffUTC": "2026-06-21T19:00:00Z", "home": "Belgium", "away": "Iran", "venue": "SoFi Stadium, Inglewood"}, {"id": 39, "stage": "group", "group": "H", "kickoffUTC": "2026-06-21T22:00:00Z", "home": "Uruguay", "away": "Cape Verde", "venue": "Hard Rock Stadium, Miami Gardens"}, {"id": 40, "stage": "group", "group": "G", "kickoffUTC": "2026-06-22T01:00:00Z", "home": "New Zealand", "away": "Egypt", "venue": "BC Place, Vancouver"}, {"id": 41, "stage": "group", "group": "J", "kickoffUTC": "2026-06-22T17:00:00Z", "home": "Argentina", "away": "Austria", "venue": "AT&T Stadium, Arlington"}, {"id": 42, "stage": "group", "group": "I", "kickoffUTC": "2026-06-22T21:00:00Z", "home": "France", "away": "Iraq", "venue": "Lincoln Financial Field, Philadelphia"}, {"id": 43, "stage": "group", "group": "I", "kickoffUTC": "2026-06-23T00:00:00Z", "home": "Norway", "away": "Senegal", "venue": "MetLife Stadium, East Rutherford"}, {"id": 44, "stage": "group", "group": "J", "kickoffUTC": "2026-06-23T03:00:00Z", "home": "Jordan", "away": "Algeria", "venue": "Levi's Stadium, Santa Clara"}, {"id": 45, "stage": "group", "group": "K", "kickoffUTC": "2026-06-23T17:00:00Z", "home": "Portugal", "away": "Uzbekistan", "venue": "NRG Stadium, Houston"}, {"id": 46, "stage": "group", "group": "L", "kickoffUTC": "2026-06-23T20:00:00Z", "home": "England", "away": "Ghana", "venue": "Gillette Stadium, Foxborough"}, {"id": 47, "stage": "group", "group": "L", "kickoffUTC": "2026-06-23T23:00:00Z", "home": "Panama", "away": "Croatia", "venue": "BMO Field, Toronto"}, {"id": 48, "stage": "group", "group": "K", "kickoffUTC": "2026-06-24T02:00:00Z", "home": "Colombia", "away": "DR Congo", "venue": "Estadio Akron, Zapopan"}, {"id": 49, "stage": "group", "group": "B", "kickoffUTC": "2026-06-24T19:00:00Z", "home": "Switzerland", "away": "Canada", "venue": "BC Place, Vancouver"}, {"id": 50, "stage": "group", "group": "B", "kickoffUTC": "2026-06-24T19:00:00Z", "home": "Bosnia and Herzegovina", "away": "Qatar", "venue": "Lumen Field, Seattle"}, {"id": 51, "stage": "group", "group": "C", "kickoffUTC": "2026-06-24T22:00:00Z", "home": "Scotland", "away": "Brazil", "venue": "Hard Rock Stadium, Miami Gardens"}, {"id": 52, "stage": "group", "group": "C", "kickoffUTC": "2026-06-24T22:00:00Z", "home": "Morocco", "away": "Haiti", "venue": "Mercedes-Benz Stadium, Atlanta"}, {"id": 53, "stage": "group", "group": "A", "kickoffUTC": "2026-06-25T01:00:00Z", "home": "Czech Republic", "away": "Mexico", "venue": "Estadio Azteca, Mexico City"}, {"id": 54, "stage": "group", "group": "A", "kickoffUTC": "2026-06-25T01:00:00Z", "home": "South Africa", "away": "South Korea", "venue": "Estadio BBVA, Monterrey"}, {"id": 55, "stage": "group", "group": "E", "kickoffUTC": "2026-06-25T20:00:00Z", "home": "Curaçao", "away": "Ivory Coast", "venue": "Lincoln Financial Field, Philadelphia"}, {"id": 56, "stage": "group", "group": "E", "kickoffUTC": "2026-06-25T20:00:00Z", "home": "Ecuador", "away": "Germany", "venue": "MetLife Stadium, East Rutherford"}, {"id": 57, "stage": "group", "group": "F", "kickoffUTC": "2026-06-25T23:00:00Z", "home": "Japan", "away": "Sweden", "venue": "AT&T Stadium, Arlington"}, {"id": 58, "stage": "group", "group": "F", "kickoffUTC": "2026-06-25T23:00:00Z", "home": "Tunisia", "away": "Netherlands", "venue": "Arrowhead Stadium, Kansas City"}, {"id": 59, "stage": "group", "group": "D", "kickoffUTC": "2026-06-26T02:00:00Z", "home": "Turkey", "away": "USA", "venue": "SoFi Stadium, Inglewood"}, {"id": 60, "stage": "group", "group": "D", "kickoffUTC": "2026-06-26T02:00:00Z", "home": "Paraguay", "away": "Australia", "venue": "Levi's Stadium, Santa Clara"}, {"id": 61, "stage": "group", "group": "I", "kickoffUTC": "2026-06-26T19:00:00Z", "home": "Norway", "away": "France", "venue": "Gillette Stadium, Foxborough"}, {"id": 62, "stage": "group", "group": "I", "kickoffUTC": "2026-06-26T19:00:00Z", "home": "Senegal", "away": "Iraq", "venue": "BMO Field, Toronto"}, {"id": 63, "stage": "group", "group": "H", "kickoffUTC": "2026-06-27T00:00:00Z", "home": "Cape Verde", "away": "Saudi Arabia", "venue": "NRG Stadium, Houston"}, {"id": 64, "stage": "group", "group": "H", "kickoffUTC": "2026-06-27T00:00:00Z", "home": "Uruguay", "away": "Spain", "venue": "Estadio Akron, Zapopan"}, {"id": 65, "stage": "group", "group": "G", "kickoffUTC": "2026-06-27T03:00:00Z", "home": "Egypt", "away": "Iran", "venue": "Lumen Field, Seattle"}, {"id": 66, "stage": "group", "group": "G", "kickoffUTC": "2026-06-27T03:00:00Z", "home": "New Zealand", "away": "Belgium", "venue": "BC Place, Vancouver"}, {"id": 67, "stage": "group", "group": "L", "kickoffUTC": "2026-06-27T21:00:00Z", "home": "Panama", "away": "England", "venue": "MetLife Stadium, East Rutherford"}, {"id": 68, "stage": "group", "group": "L", "kickoffUTC": "2026-06-27T21:00:00Z", "home": "Croatia", "away": "Ghana", "venue": "Lincoln Financial Field, Philadelphia"}, {"id": 69, "stage": "group", "group": "K", "kickoffUTC": "2026-06-27T23:30:00Z", "home": "Colombia", "away": "Portugal", "venue": "Hard Rock Stadium, Miami Gardens"}, {"id": 70, "stage": "group", "group": "K", "kickoffUTC": "2026-06-27T23:30:00Z", "home": "DR Congo", "away": "Uzbekistan", "venue": "Mercedes-Benz Stadium, Atlanta"}, {"id": 71, "stage": "group", "group": "J", "kickoffUTC": "2026-06-28T02:00:00Z", "home": "Algeria", "away": "Austria", "venue": "Arrowhead Stadium, Kansas City"}, {"id": 72, "stage": "group", "group": "J", "kickoffUTC": "2026-06-28T02:00:00Z", "home": "Jordan", "away": "Argentina", "venue": "AT&T Stadium, Arlington"}], "prizes": [{"id": "winner", "label": "Winner", "amount": 125, "icon": "🏆"}, {"id": "runnerup", "label": "Second Place", "amount": 60, "icon": "🥈"}, {"id": "goldenboot", "label": "Golden Boot Team", "amount": 15, "icon": "⚽"}, {"id": "heaviest", "label": "Heaviest Defeat", "amount": 20, "icon": "💥"}, {"id": "spoon", "label": "Wooden Spoon", "amount": 20, "icon": "🥄"}]};
 
 // Build lookup maps
 const flagOf = (t) => {
@@ -831,30 +784,24 @@ function renderOverview() {
   const ld = leaders();
 
   // Stat row
-  const tournamentStartISO = '2026-06-11T19:00:00Z'; // 20:00 BST 11 Jun
-  const now = new Date();
-  const kickoff = new Date(tournamentStartISO);
-  const secsLeft = Math.floor((kickoff - now) / 1000);
-  let countdownHTML;
-  if (secsLeft > 0) {
-    const d = Math.floor(secsLeft / 86400);
-    const h = Math.floor((secsLeft % 86400) / 3600);
-    const m = Math.floor((secsLeft % 3600) / 60);
-    const s = secsLeft % 60;
-    const pad = n => String(n).padStart(2, '0');
-    const timeStr = d > 0 ? `${d}d ${pad(h)}:${pad(m)}:${pad(s)}` : `${pad(h)}:${pad(m)}:${pad(s)}`;
-    countdownHTML = `<div class="stat-value" id="countdownValue" style="font-size: 22px; letter-spacing: 0.01em;">${timeStr}</div>
-      <div class="stat-sub">Until kick-off · 20:00 BST</div>`;
-  } else {
-    const prog2 = tournamentProgress();
-    countdownHTML = `<div class="stat-value" id="countdownValue">Day ${Math.floor((now - kickoff) / 86400000) + 1}</div>
-      <div class="stat-sub">11 Jun – 19 Jul 2026</div>`;
-  }
+  // Calendar-day countdown in UK time (not raw hours): "tomorrow" if kickoff is the next UK day,
+  // regardless of whether kickoff is 12 or 36 hours from now.
+  const tournamentStartISO = '2026-06-11T19:00:00Z';   // 20:00 BST 11 Jun
+  const ukDay = (iso) => new Date(iso).toLocaleDateString('en-CA', { timeZone: 'Europe/London' });
+  const todayUK = ukDay(new Date().toISOString());
+  const startUK = ukDay(tournamentStartISO);
+  const dayDiff = Math.round((new Date(startUK) - new Date(todayUK)) / 86400000);
+  let startStatus;
+  if (dayDiff > 1) startStatus = `Starts in ${dayDiff} days`;
+  else if (dayDiff === 1) startStatus = 'Starts tomorrow';
+  else if (dayDiff === 0) startStatus = 'Kicks off today';
+  else startStatus = `Day ${-dayDiff + 1}`;
 
   document.getElementById('overviewStats').innerHTML = `
     <div class="stat">
-      <div class="stat-label">Kick-off Countdown</div>
-      ${countdownHTML}
+      <div class="stat-label">Tournament</div>
+      <div class="stat-value">${startStatus}</div>
+      <div class="stat-sub">11 Jun – 19 Jul 2026</div>
     </div>
     <div class="stat">
       <div class="stat-label">Matches Played</div>
@@ -934,7 +881,7 @@ function renderOverview() {
     .slice(0, 6);
   document.getElementById('latestFixtures').innerHTML = latest.length
     ? latest.map(renderFixtureCard).join('')
-    : '<div class="empty"><div class="display">No scores yet</div><div>Tap any fixture to enter a result.</div></div>';
+    : '<div class="empty"><div class="display">No scores yet</div><div>Results will appear here once matches are played.</div></div>';
   document.getElementById('latestMeta').textContent = latest.length ? `Last ${latest.length} results` : '';
 }
 
@@ -964,7 +911,7 @@ function renderFixtureCard(fx) {
   const homeOwner = entrantOf(fx.home);
   const awayOwner = entrantOf(fx.away);
   return `
-    <div class="fixture" data-fixture="${fx.id}">
+    <div class="fixture">
       <div class="fixture-meta">
         <span><span class="fixture-grp">Grp ${fx.group}</span> · ${fmtUKDateTime(fx.kickoffUTC)}</span>
         <span>${played ? 'FT' : 'Upcoming'}</span>
@@ -1205,8 +1152,6 @@ function renderScorers() {
     </div>
   `;
 }
-
-
 // ──────── Toast ────────
 let toastTimer;
 function toast(msg) {
@@ -1262,48 +1207,74 @@ document.querySelectorAll('#entrantsTable th.sortable').forEach(th => {
   });
 });
 
-
-
-// Last refresh timestamp
+// Last refresh timestamp + next scheduled run countdown
 function renderRefreshStamp() {
   const ts = DATA.lastRefreshed;
-  if (!ts) return;
-  const d = new Date(ts);
-  const formatted = d.toLocaleString('en-GB', { timeZone: 'Europe/London', weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false });
-  document.getElementById('lastRefresh').innerHTML = `Last refreshed<br><span class="when">${formatted}</span>`;
+  const el = document.getElementById('lastRefresh');
+
+  function nextCronMinute() {
+    // Cron is */20 — fires at :00, :20, :40 of every hour
+    const now = new Date();
+    const m = now.getUTCMinutes();
+    const s = now.getUTCSeconds();
+    const nextM = (Math.floor(m / 20) + 1) * 20;  // next :00, :20, or :40 boundary
+    const secsUntil = (nextM - m) * 60 - s;
+    return secsUntil;
+  }
+
+  function formatCountdown(secs) {
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    return `${m}:${String(s).padStart(2, '0')}`;
+  }
+
+  function update() {
+    const secs = nextCronMinute();
+    let refreshedLine = '';
+    if (ts) {
+      const d = new Date(ts);
+      const formatted = d.toLocaleString('en-GB', { timeZone: 'Europe/London', weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', hour12: false });
+      refreshedLine = `Last refreshed <span class="when">${formatted}</span><br>`;
+    }
+    el.innerHTML = `${refreshedLine}Next check in <span class="when countdown">${formatCountdown(secs)}</span>`;
+  }
+
+  update();
+  // Tick every second
+  setInterval(update, 1000);
 }
-renderRefreshStamp();
 
 populateSelects();
 renderPrizes();
-renderAll();
 
-// ──────── Live countdown ticker ────────
-(function() {
-  const kickoff = new Date('2026-06-11T19:00:00Z'); // 20:00 BST
-  function tick() {
-    const el = document.getElementById('countdownValue');
-    if (!el) return;
-    const now = new Date();
-    const secsLeft = Math.floor((kickoff - now) / 1000);
-    if (secsLeft <= 0) {
-      // Tournament has started — switch to day number, stop ticking
-      const day = Math.floor((now - kickoff) / 86400000) + 1;
-      el.textContent = 'Day ' + day;
-      const sub = el.nextElementSibling;
-      if (sub) sub.textContent = '11 Jun – 19 Jul 2026';
-      return;
-    }
-    const d = Math.floor(secsLeft / 86400);
-    const h = Math.floor((secsLeft % 86400) / 3600);
-    const m = Math.floor((secsLeft % 3600) / 60);
-    const s = secsLeft % 60;
-    const pad = n => String(n).padStart(2, '0');
-    el.textContent = d > 0 ? d + 'd ' + pad(h) + ':' + pad(m) + ':' + pad(s) : pad(h) + ':' + pad(m) + ':' + pad(s);
-    setTimeout(tick, 1000);
-  }
-  tick();
-})(); 
+// ──────── Bootstrap: fetch live JSON from /data/, then render ────────
+async function bootstrap() {
+  // Try to fetch live data files written by the GitHub Action.
+  // Use cache: 'no-store' so the browser doesn't serve a stale copy.
+  // If any fetch fails (404, network error, file missing on first deploy),
+  // we silently fall back to the embedded values in DATA.
+  const tryFetch = async (path) => {
+    try {
+      const r = await fetch(path, { cache: 'no-store' });
+      if (!r.ok) return null;
+      return await r.json();
+    } catch (e) { return null; }
+  };
+
+  const [live, scorers, updated] = await Promise.all([
+    tryFetch('./data/scores.json'),
+    tryFetch('./data/top-scorers.json'),
+    tryFetch('./data/last-updated.json'),
+  ]);
+
+  if (live && typeof live === 'object') DATA.embeddedScores = live;
+  if (Array.isArray(scorers)) DATA.topScorers = scorers;
+  if (updated && updated.timestamp) DATA.lastRefreshed = updated.timestamp;
+
+  renderRefreshStamp();
+  renderAll();
+}
+bootstrap();
 </script>
 </body>
 </html>
