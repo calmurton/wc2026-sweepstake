@@ -1,198 +1,219 @@
 #!/usr/bin/env python3
 """
-refresh.py — fetches live World Cup 2026 scores from football-data.org
-and patches the DATA object in sweepstake_dashboard.html.
+Fetch World Cup scores + top scorers from football-data.org and write them
+to ``data/`` as JSON files the dashboard can consume.
 
-Requires: requests
-  pip install requests
+Required env: FOOTBALL_DATA_TOKEN (free tier OK — World Cup is included).
+
+Output files:
+  data/scores.json        — { "<fixtureId>": { "h": int, "a": int } }
+  data/top-scorers.json   — [ { "name": str, "team": str, "goals": int }, ... ]
+  data/last-updated.json  — { "timestamp": ISO, "matchesFound": N, "scorersFound": N }
+
+The script is intentionally tolerant of failure: if the scorers endpoint errors
+we still write scores; if the API is unreachable the existing files are left
+untouched so the dashboard keeps showing the last good data.
 """
 
 import json
 import os
-import re
 import sys
+import urllib.request
+import urllib.error
 from datetime import datetime, timezone
+from pathlib import Path
 
-import requests
+API_BASE = "https://api.football-data.org/v4"
+COMPETITION_CODE = "WC"
+TIMEOUT = 30
 
-API_KEY = os.environ.get("FOOTBALL_API_KEY")
-if not API_KEY:
-    print("ERROR: FOOTBALL_API_KEY environment variable not set.")
+TOKEN = os.environ.get("FOOTBALL_DATA_TOKEN")
+if not TOKEN:
+    print("ERROR: FOOTBALL_DATA_TOKEN environment variable not set", file=sys.stderr)
     sys.exit(1)
 
-HTML_FILE = "index.html"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+DATA_DIR = REPO_ROOT / "data"
+DATA_DIR.mkdir(exist_ok=True)
 
-# football-data.org competition ID for FIFA World Cup 2026
-# WC = 2000 on football-data.org (same ID used for every World Cup)
-COMPETITION_ID = 2000
+# ── Team name normalisation ──────────────────────────────────────────────
+# football-data.org's names sometimes differ from ours. Map both ways.
+TEAM_ALIASES = {
+    # API name → our canonical name
+    "United States": "USA",
+    "USA": "USA",
+    "US": "USA",
+    "Czech Republic": "Czech Republic",
+    "Czechia": "Czech Republic",
+    "Türkiye": "Turkey",
+    "Turkey": "Turkey",
+    "Korea Republic": "South Korea",
+    "Republic of Korea": "South Korea",
+    "South Korea": "South Korea",
+    "IR Iran": "Iran",
+    "Iran": "Iran",
+    "Bosnia and Herzegovina": "Bosnia and Herzegovina",
+    "Bosnia-Herzegovina": "Bosnia and Herzegovina",
+    "Bosnia & Herzegovina": "Bosnia and Herzegovina",
+    "Cabo Verde": "Cape Verde",
+    "Cape Verde": "Cape Verde",
+    "Cape Verde Islands": "Cape Verde",
+    "DR Congo": "DR Congo",
+    "Congo DR": "DR Congo",
+    "Democratic Republic of the Congo": "DR Congo",
+    "Democratic Republic of Congo": "DR Congo",
+    "Côte d'Ivoire": "Ivory Coast",
+    "Cote d'Ivoire": "Ivory Coast",
+    "Ivory Coast": "Ivory Coast",
+    "Curaçao": "Curaçao",
+    "Curacao": "Curaçao",
+    "Saudi Arabia": "Saudi Arabia",
+    "KSA": "Saudi Arabia",
+    "New Zealand": "New Zealand",
+    "South Africa": "South Africa",
+}
 
-HEADERS = {"X-Auth-Token": API_KEY}
-BASE_URL = "https://api.football-data.org/v4"
+
+def normalize(name: str) -> str:
+    return TEAM_ALIASES.get(name, name)
 
 
-def fetch(path):
-    url = f"{BASE_URL}{path}"
-    r = requests.get(url, headers=HEADERS, timeout=15)
-    if r.status_code == 429:
-        print("Rate limited by API — skipping this run.")
-        sys.exit(0)
-    r.raise_for_status()
-    return r.json()
+def api_get(endpoint: str) -> dict:
+    req = urllib.request.Request(
+        f"{API_BASE}{endpoint}",
+        headers={"X-Auth-Token": TOKEN, "Accept": "application/json"},
+    )
+    with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+        return json.loads(r.read())
 
 
-def extract_scores(matches):
-    """
-    Returns a dict of { fixture_id_in_html: {h, a} } for finished/in-play matches.
-    football-data.org match IDs won't match our internal IDs, so we match by
-    home team name + away team name instead.
-    """
+# ── Load our canonical fixtures (for API match → fixture ID mapping) ─────
+FIXTURES_FILE = DATA_DIR / "fixtures.json"
+if not FIXTURES_FILE.exists():
+    print(f"ERROR: {FIXTURES_FILE} missing — cannot map API matches", file=sys.stderr)
+    sys.exit(1)
+
+with FIXTURES_FILE.open(encoding="utf-8") as f:
+    OUR_FIXTURES = json.load(f)
+
+
+def map_to_fixture_id(home_api: str, away_api: str, utc_kickoff: str):
+    """Try date+pair first, then fall back to just the team pair."""
+    h = normalize(home_api)
+    a = normalize(away_api)
+    utc_date = utc_kickoff[:10] if utc_kickoff else ""
+    # Exact match: same teams, same UTC calendar date
+    for fx in OUR_FIXTURES:
+        if fx["home"] == h and fx["away"] == a and fx["kickoffUTC"][:10] == utc_date:
+            return fx["id"]
+    # Loose match: same team pair only (kickoff may have shifted by a day across timezones)
+    candidates = [fx for fx in OUR_FIXTURES if fx["home"] == h and fx["away"] == a]
+    if len(candidates) == 1:
+        return candidates[0]["id"]
+    # Reverse pair fallback (in case API has home/away swapped vs our data)
+    candidates = [fx for fx in OUR_FIXTURES if fx["home"] == a and fx["away"] == h]
+    if len(candidates) == 1:
+        return candidates[0]["id"]
+    return None
+
+
+def fetch_scores() -> dict:
+    """Return { fixtureIdStr: { 'h': int, 'a': int } } for matches with a score."""
+    try:
+        data = api_get(f"/competitions/{COMPETITION_CODE}/matches")
+    except (urllib.error.HTTPError, urllib.error.URLError) as e:
+        print(f"ERROR: matches endpoint failed: {e}", file=sys.stderr)
+        sys.exit(2)
+
     scores = {}
-    for m in matches:
+    unmatched = []
+    for m in data.get("matches", []):
+        home = m["homeTeam"]["name"]
+        away = m["awayTeam"]["name"]
+        utc = m.get("utcDate", "")
+        fx_id = map_to_fixture_id(home, away, utc)
+        if fx_id is None:
+            unmatched.append(f"{home} vs {away} ({utc[:10]})")
+            continue
+        s = m.get("score", {})
         status = m.get("status", "")
-        if status not in ("FINISHED", "IN_PLAY", "PAUSED"):
-            continue
-        score = m.get("score", {})
-        ft = score.get("fullTime", {})
-        # Fall back to current score if match is live
-        if ft.get("home") is None:
-            ft = score.get("regularTime", {})
-        if ft.get("home") is None:
-            continue
-        home_team = m["homeTeam"]["name"]
-        away_team = m["awayTeam"]["name"]
-        scores[(home_team, away_team)] = {
-            "h": ft["home"],
-            "a": ft["away"],
-        }
+        ft = s.get("fullTime", {})
+        h, a = ft.get("home"), ft.get("away")
+
+        if h is None or a is None:
+            if status in ("IN_PLAY", "PAUSED"):
+                # Live — best available partial score
+                ht = s.get("halfTime", {})
+                h, a = ht.get("home"), ht.get("away")
+            elif status == "FINISHED":
+                # Free-tier lag: fullTime not yet populated despite match being over.
+                # Try regularTime (after 90 mins, before AET), then halfTime as last resort.
+                rt = s.get("regularTime", {})
+                h, a = rt.get("home"), rt.get("away")
+                if h is None or a is None:
+                    ht = s.get("halfTime", {})
+                    h, a = ht.get("home"), ht.get("away")
+                if isinstance(h, int) and isinstance(a, int):
+                    print(f"⚠ FINISHED match {home} vs {away} used fallback score (fullTime not yet populated)", file=sys.stderr)
+        if isinstance(h, int) and isinstance(a, int):
+            scores[str(fx_id)] = {"h": h, "a": a}
+
+    if unmatched:
+        print(f"⚠ {len(unmatched)} matches could not be mapped to our fixtures:", file=sys.stderr)
+        for u in unmatched[:20]:
+            print(f"  - {u}", file=sys.stderr)
+        if len(unmatched) > 20:
+            print(f"  ... and {len(unmatched) - 20} more", file=sys.stderr)
     return scores
 
 
-def normalise_name(api_name):
-    """
-    football-data.org uses slightly different country names in places.
-    Map them to whatever is in DATA.fixtures in the HTML.
-    Extend this dict if you spot mismatches.
-    """
-    mapping = {
-        "USA": "USA",
-        "United States": "USA",
-        "Korea Republic": "South Korea",
-        "IR Iran": "Iran",
-        "Czechia": "Czech Republic",
-        "Bosnia-Herzegovina": "Bosnia and Herzegovina",
-        "DR Congo": "DR Congo",
-        "Congo DR": "DR Congo",
-        "Cote d'Ivoire": "Ivory Coast",
-        "Côte d'Ivoire": "Ivory Coast",
-        "Curacao": "Curaçao",
-        "Curaçao": "Curaçao",
-        "Cape Verde Islands": "Cape Verde",
-    }
-    return mapping.get(api_name, api_name)
+def fetch_scorers() -> list:
+    """Return top scorers as [{ name, team, goals }, ...] sorted by goals desc."""
+    try:
+        data = api_get(f"/competitions/{COMPETITION_CODE}/scorers?limit=25")
+    except Exception as e:
+        print(f"⚠ scorers endpoint failed (non-fatal): {e}", file=sys.stderr)
+        return []
 
-
-def extract_scorers(scorers_data):
-    """Returns a sorted list of top scorers."""
     out = []
-    for s in scorers_data.get("scorers", []):
+    for s in data.get("scorers", []):
         player = s.get("player", {})
         team = s.get("team", {})
-        goals = s.get("goals", 0) or 0
-        if goals == 0:
+        goals = s.get("goals")
+        if not goals or not player.get("name") or not team.get("name"):
             continue
         out.append({
-            "name": player.get("name", "Unknown"),
-            "team": normalise_name(team.get("name", "")),
+            "name": player["name"],
+            "team": normalize(team["name"]),
             "goals": goals,
         })
-    out.sort(key=lambda x: -x["goals"])
+    # API returns sorted by goals desc but resort defensively
+    out.sort(key=lambda p: (-p["goals"], p["name"]))
     return out
 
 
-def build_embedded_scores(api_scores, html_fixtures):
-    """
-    Match API results (keyed by team name pair) to our fixture IDs.
-    Returns { fixture_id: {h, a} }
-    """
-    embedded = {}
-    for fx in html_fixtures:
-        home = fx["home"]
-        away = fx["away"]
-        # Try direct match first
-        result = api_scores.get((home, away))
-        if result is None:
-            # Try normalised names from the API side
-            for (ah, aa), score in api_scores.items():
-                if normalise_name(ah) == home and normalise_name(aa) == away:
-                    result = score
-                    break
-        if result is not None:
-            embedded[str(fx["id"])] = result
-    return embedded
+def main() -> int:
+    print(f"Fetching from {API_BASE}/competitions/{COMPETITION_CODE} …")
+    scores = fetch_scores()
+    scorers = fetch_scorers()
 
-
-def patch_html(html_path, new_scores, new_scorers, refreshed_iso):
-    with open(html_path, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    # Find the existing DATA JSON blob
-    pattern = r'(const DATA = )(\{.*?\});'
-    match = re.search(pattern, content, re.DOTALL)
-    if not match:
-        print("ERROR: Could not find DATA object in HTML.")
-        sys.exit(1)
-
-    data = json.loads(match.group(2))
-
-    # Patch only the fields we own — leave entrants, groups, fixtures, flags, prizes untouched
-    data["embeddedScores"] = new_scores
-    data["topScorers"] = new_scorers
-    data["lastRefreshed"] = refreshed_iso
-    
-
-    new_data_str = "const DATA = " + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + ";"
-    new_content = content[:match.start()] + new_data_str + content[match.end():]
-
-    with open(html_path, "w", encoding="utf-8") as f:
-        f.write(new_content)
-
-    print(f"Patched {html_path}: {len(new_scores)} scores, {len(new_scorers)} scorers.")
-
-
-def main():
-    print("Fetching matches...")
-    matches_data = fetch(f"/competitions/{COMPETITION_ID}/matches")
-    matches = matches_data.get("matches", [])
-    print(f"  Got {len(matches)} matches from API.")
-
-    print("Fetching top scorers...")
-    try:
-        scorers_data = fetch(f"/competitions/{COMPETITION_ID}/scorers?limit=20")
-        scorers = extract_scorers(scorers_data)
-    except Exception as e:
-        print(f"  Could not fetch scorers ({e}), skipping.")
-        scorers = []
-
-    api_scores = extract_scores(matches)
-    print(f"  {len(api_scores)} finished/live matches found.")
-
-    # Load fixture list from the HTML so we can match IDs
-    with open(HTML_FILE, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    pattern = r'const DATA = (\{.*?\});'
-    match = re.search(pattern, content, re.DOTALL)
-    if not match:
-        print("ERROR: Could not find DATA in HTML.")
-        sys.exit(1)
-    data = json.loads(match.group(1))
-    html_fixtures = data.get("fixtures", [])
-
-    embedded_scores = build_embedded_scores(api_scores, html_fixtures)
-    refreshed_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-    patch_html(HTML_FILE, embedded_scores, scorers, refreshed_iso)
+    (DATA_DIR / "scores.json").write_text(
+        json.dumps(scores, indent=2, sort_keys=True) + "\n"
+    )
+    (DATA_DIR / "top-scorers.json").write_text(
+        json.dumps(scorers, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    (DATA_DIR / "last-updated.json").write_text(
+        json.dumps({
+            "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+            "matchesFound": len(scores),
+            "scorersFound": len(scorers),
+        }, indent=2) + "\n"
+    )
+    print(f"✓ Wrote {len(scores)} match scores, {len(scorers)} scorers")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
