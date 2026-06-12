@@ -53,5 +53,6 @@ jobs:
             echo "No score changes detected."
           else
             git commit -m "Auto-update scores [$(date -u +%Y-%m-%dT%H:%MZ)]"
+            git pull --rebase
             git push
           fi
