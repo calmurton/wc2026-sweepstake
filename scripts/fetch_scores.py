@@ -131,12 +131,20 @@ def fetch_scores() -> dict:
         home = m["homeTeam"]["name"]
         away = m["awayTeam"]["name"]
         utc = m.get("utcDate", "")
+        status = m.get("status", "")
+        s = m.get("score", {})
+
+        # Debug: print raw score data for any non-scheduled match
+        if status not in ("SCHEDULED", "TIMED"):
+            ft_d = s.get("fullTime", {})
+            rt_d = s.get("regularTime", {})
+            ht_d = s.get("halfTime", {})
+            print(f"  [{status}] {home} vs {away} | fullTime={ft_d} regularTime={rt_d} halfTime={ht_d}", file=sys.stderr)
+
         fx_id = map_to_fixture_id(home, away, utc)
         if fx_id is None:
             unmatched.append(f"{home} vs {away} ({utc[:10]})")
             continue
-        s = m.get("score", {})
-        status = m.get("status", "")
         ft = s.get("fullTime", {})
         h, a = ft.get("home"), ft.get("away")
 
