@@ -1,5 +1,10 @@
 [
   {
+    "name": "Cyle Larin",
+    "team": "Canada",
+    "goals": 1
+  },
+  {
     "name": "Hyun-Gyu Oh",
     "team": "South Korea",
     "goals": 1
@@ -7,6 +12,11 @@
   {
     "name": "In-beom Hwang",
     "team": "South Korea",
+    "goals": 1
+  },
+  {
+    "name": "Jovo Lukić",
+    "team": "Bosnia and Herzegovina",
     "goals": 1
   },
   {
