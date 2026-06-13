@@ -1,7 +1,17 @@
 [
   {
+    "name": "Folarin Balogun",
+    "team": "USA",
+    "goals": 2
+  },
+  {
     "name": "Cyle Larin",
     "team": "Canada",
+    "goals": 1
+  },
+  {
+    "name": "Gio Reyna",
+    "team": "USA",
     "goals": 1
   },
   {
@@ -27,6 +37,11 @@
   {
     "name": "Ladislav Krejčí",
     "team": "Czech Republic",
+    "goals": 1
+  },
+  {
+    "name": "Mauricio",
+    "team": "Paraguay",
     "goals": 1
   },
   {
