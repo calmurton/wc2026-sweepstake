@@ -5,6 +5,11 @@
     "goals": 2
   },
   {
+    "name": "Kai Havertz",
+    "team": "Germany",
+    "goals": 2
+  },
+  {
     "name": "Boualem Khoukhi",
     "team": "Qatar",
     "goals": 1
@@ -22,6 +27,16 @@
   {
     "name": "Cyle Larin",
     "team": "Canada",
+    "goals": 1
+  },
+  {
+    "name": "Deniz Undav",
+    "team": "Germany",
+    "goals": 1
+  },
+  {
+    "name": "Felix Kalu Nmecha",
+    "team": "Germany",
     "goals": 1
   },
   {
@@ -45,6 +60,11 @@
     "goals": 1
   },
   {
+    "name": "Jamal Musiala",
+    "team": "Germany",
+    "goals": 1
+  },
+  {
     "name": "John McGinn",
     "team": "Scotland",
     "goals": 1
@@ -65,13 +85,28 @@
     "goals": 1
   },
   {
+    "name": "Livano Comenencia",
+    "team": "Curaçao",
+    "goals": 1
+  },
+  {
     "name": "Mauricio",
     "team": "Paraguay",
     "goals": 1
   },
   {
+    "name": "Nathaniel Brown",
+    "team": "Germany",
+    "goals": 1
+  },
+  {
     "name": "Nestor Irankunda",
     "team": "Australia",
+    "goals": 1
+  },
+  {
+    "name": "Nico Schlotterbeck",
+    "team": "Germany",
     "goals": 1
   },
   {
