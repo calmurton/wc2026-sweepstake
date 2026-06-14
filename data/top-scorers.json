@@ -5,6 +5,11 @@
     "goals": 2
   },
   {
+    "name": "Boualem Khoukhi",
+    "team": "Qatar",
+    "goals": 1
+  },
+  {
     "name": "Breel Embolo",
     "team": "Switzerland",
     "goals": 1
@@ -30,6 +35,16 @@
     "goals": 1
   },
   {
+    "name": "Ismael Saibari",
+    "team": "Morocco",
+    "goals": 1
+  },
+  {
+    "name": "John McGinn",
+    "team": "Scotland",
+    "goals": 1
+  },
+  {
     "name": "Jovo Lukić",
     "team": "Bosnia and Herzegovina",
     "goals": 1
@@ -52,6 +67,11 @@
   {
     "name": "Raúl Jiménez",
     "team": "Mexico",
+    "goals": 1
+  },
+  {
+    "name": "Vinicius Junior",
+    "team": "Brazil",
     "goals": 1
   }
 ]
