@@ -1,5 +1,10 @@
 [
   {
+    "name": "Elijah Just",
+    "team": "New Zealand",
+    "goals": 2
+  },
+  {
     "name": "Folarin Balogun",
     "team": "USA",
     "goals": 2
@@ -32,11 +37,6 @@
   {
     "name": "Cyle Larin",
     "team": "Canada",
-    "goals": 1
-  },
-  {
-    "name": "Deniz Undav",
-    "team": "Germany",
     "goals": 1
   },
   {
