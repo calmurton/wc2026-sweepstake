@@ -5,6 +5,11 @@
     "goals": 2
   },
   {
+    "name": "Erling Haaland",
+    "team": "Norway",
+    "goals": 2
+  },
+  {
     "name": "Folarin Balogun",
     "team": "USA",
     "goals": 2
@@ -12,6 +17,11 @@
   {
     "name": "Kai Havertz",
     "team": "Germany",
+    "goals": 2
+  },
+  {
+    "name": "Kylian Mbappé",
+    "team": "France",
     "goals": 2
   },
   {
@@ -65,11 +75,6 @@
     "goals": 1
   },
   {
-    "name": "Jamal Musiala",
-    "team": "Germany",
-    "goals": 1
-  },
-  {
     "name": "John McGinn",
     "team": "Scotland",
     "goals": 1
@@ -97,11 +102,6 @@
   {
     "name": "Mauricio",
     "team": "Paraguay",
-    "goals": 1
-  },
-  {
-    "name": "Nathaniel Brown",
-    "team": "Germany",
     "goals": 1
   },
   {
