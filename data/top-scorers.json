@@ -1,5 +1,10 @@
 [
   {
+    "name": "Lionel Messi",
+    "team": "Argentina",
+    "goals": 3
+  },
+  {
     "name": "Elijah Just",
     "team": "New Zealand",
     "goals": 2
@@ -107,11 +112,6 @@
   {
     "name": "Nestor Irankunda",
     "team": "Australia",
-    "goals": 1
-  },
-  {
-    "name": "Nico Schlotterbeck",
-    "team": "Germany",
     "goals": 1
   },
   {
