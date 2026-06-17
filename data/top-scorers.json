@@ -20,6 +20,11 @@
     "goals": 2
   },
   {
+    "name": "Harry Kane",
+    "team": "England",
+    "goals": 2
+  },
+  {
     "name": "Kai Havertz",
     "team": "Germany",
     "goals": 2
@@ -97,11 +102,6 @@
   {
     "name": "Ladislav Krejčí",
     "team": "Czech Republic",
-    "goals": 1
-  },
-  {
-    "name": "Livano Comenencia",
-    "team": "Curaçao",
     "goals": 1
   },
   {
