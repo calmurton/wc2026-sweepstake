@@ -10,6 +10,16 @@
     "goals": 3
   },
   {
+    "name": "Brian Brobbey",
+    "team": "Netherlands",
+    "goals": 2
+  },
+  {
+    "name": "Cody Gakpo",
+    "team": "Netherlands",
+    "goals": 2
+  },
+  {
     "name": "Cyle Larin",
     "team": "Canada",
     "goals": 2
@@ -70,11 +80,6 @@
     "goals": 2
   },
   {
-    "name": "Boualem Khoukhi",
-    "team": "Qatar",
-    "goals": 1
-  },
-  {
     "name": "Breel Embolo",
     "team": "Switzerland",
     "goals": 1
@@ -92,11 +97,6 @@
   {
     "name": "In-beom Hwang",
     "team": "South Korea",
-    "goals": 1
-  },
-  {
-    "name": "John McGinn",
-    "team": "Scotland",
     "goals": 1
   },
   {
