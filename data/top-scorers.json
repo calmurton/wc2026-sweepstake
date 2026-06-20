@@ -55,6 +55,16 @@
     "goals": 2
   },
   {
+    "name": "Matheus Cunha",
+    "team": "Brazil",
+    "goals": 2
+  },
+  {
+    "name": "Vinicius Junior",
+    "team": "Brazil",
+    "goals": 2
+  },
+  {
     "name": "Yasin Ayari",
     "team": "Sweden",
     "goals": 2
@@ -110,18 +120,8 @@
     "goals": 1
   },
   {
-    "name": "Nestor Irankunda",
-    "team": "Australia",
-    "goals": 1
-  },
-  {
     "name": "Raúl Jiménez",
     "team": "Mexico",
-    "goals": 1
-  },
-  {
-    "name": "Vinicius Junior",
-    "team": "Brazil",
     "goals": 1
   }
 ]
