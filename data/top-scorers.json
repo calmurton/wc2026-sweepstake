@@ -1,5 +1,10 @@
 [
   {
+    "name": "Deniz Undav",
+    "team": "Germany",
+    "goals": 3
+  },
+  {
     "name": "Jonathan David",
     "team": "Canada",
     "goals": 3
@@ -8,6 +13,11 @@
     "name": "Lionel Messi",
     "team": "Argentina",
     "goals": 3
+  },
+  {
+    "name": "Ayase Ueda",
+    "team": "Japan",
+    "goals": 2
   },
   {
     "name": "Brian Brobbey",
@@ -22,6 +32,11 @@
   {
     "name": "Cyle Larin",
     "team": "Canada",
+    "goals": 2
+  },
+  {
+    "name": "Daichi Kamada",
+    "team": "Japan",
     "goals": 2
   },
   {
@@ -80,16 +95,6 @@
     "goals": 2
   },
   {
-    "name": "Breel Embolo",
-    "team": "Switzerland",
-    "goals": 1
-  },
-  {
-    "name": "Gio Reyna",
-    "team": "USA",
-    "goals": 1
-  },
-  {
     "name": "Hyun-Gyu Oh",
     "team": "South Korea",
     "goals": 1
@@ -112,11 +117,6 @@
   {
     "name": "Ladislav Krejčí",
     "team": "Czech Republic",
-    "goals": 1
-  },
-  {
-    "name": "Mauricio",
-    "team": "Paraguay",
     "goals": 1
   },
   {
