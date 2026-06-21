@@ -85,6 +85,11 @@
     "goals": 2
   },
   {
+    "name": "Mikel Oyarzabal",
+    "team": "Spain",
+    "goals": 2
+  },
+  {
     "name": "Vinicius Junior",
     "team": "Brazil",
     "goals": 2
@@ -102,11 +107,6 @@
   {
     "name": "In-beom Hwang",
     "team": "South Korea",
-    "goals": 1
-  },
-  {
-    "name": "Jovo Lukić",
-    "team": "Bosnia and Herzegovina",
     "goals": 1
   },
   {
