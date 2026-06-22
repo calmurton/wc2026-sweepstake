@@ -1,5 +1,10 @@
 [
   {
+    "name": "Lionel Messi",
+    "team": "Argentina",
+    "goals": 5
+  },
+  {
     "name": "Deniz Undav",
     "team": "Germany",
     "goals": 3
@@ -10,8 +15,8 @@
     "goals": 3
   },
   {
-    "name": "Lionel Messi",
-    "team": "Argentina",
+    "name": "Kylian Mbappé",
+    "team": "France",
     "goals": 3
   },
   {
@@ -72,11 +77,6 @@
   {
     "name": "Kai Havertz",
     "team": "Germany",
-    "goals": 2
-  },
-  {
-    "name": "Kylian Mbappé",
-    "team": "France",
     "goals": 2
   },
   {
