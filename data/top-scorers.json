@@ -85,6 +85,11 @@
     "goals": 2
   },
   {
+    "name": "Maximiliano Araújo",
+    "team": "Uruguay",
+    "goals": 2
+  },
+  {
     "name": "Mikel Oyarzabal",
     "team": "Spain",
     "goals": 2
@@ -98,11 +103,6 @@
     "name": "Yasin Ayari",
     "team": "Sweden",
     "goals": 2
-  },
-  {
-    "name": "Hyun-Gyu Oh",
-    "team": "South Korea",
-    "goals": 1
   },
   {
     "name": "In-beom Hwang",
