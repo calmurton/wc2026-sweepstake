@@ -40,6 +40,11 @@
     "goals": 2
   },
   {
+    "name": "Cristiano Ronaldo",
+    "team": "Portugal",
+    "goals": 2
+  },
+  {
     "name": "Crysencio Summerville",
     "team": "Netherlands",
     "goals": 2
@@ -116,11 +121,6 @@
   },
   {
     "name": "Julián Quiñones",
-    "team": "Mexico",
-    "goals": 1
-  },
-  {
-    "name": "Raúl Jiménez",
     "team": "Mexico",
     "goals": 1
   }
