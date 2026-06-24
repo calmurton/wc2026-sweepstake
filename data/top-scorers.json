@@ -20,6 +20,11 @@
     "goals": 3
   },
   {
+    "name": "Johan Manzambi",
+    "team": "Switzerland",
+    "goals": 3
+  },
+  {
     "name": "Jonathan David",
     "team": "Canada",
     "goals": 3
@@ -37,11 +42,6 @@
   {
     "name": "Cody Gakpo",
     "team": "Netherlands",
-    "goals": 2
-  },
-  {
-    "name": "Cristiano Ronaldo",
-    "team": "Portugal",
     "goals": 2
   },
   {
@@ -70,6 +70,11 @@
     "goals": 2
   },
   {
+    "name": "Ermin Mahmic",
+    "team": "Bosnia and Herzegovina",
+    "goals": 2
+  },
+  {
     "name": "Folarin Balogun",
     "team": "USA",
     "goals": 2
@@ -82,16 +87,6 @@
   {
     "name": "Ismael Saibari",
     "team": "Morocco",
-    "goals": 2
-  },
-  {
-    "name": "Ismaïla Sarr",
-    "team": "Senegal",
-    "goals": 2
-  },
-  {
-    "name": "Johan Manzambi",
-    "team": "Switzerland",
     "goals": 2
   },
   {
@@ -112,6 +107,11 @@
   {
     "name": "Mikel Oyarzabal",
     "team": "Spain",
+    "goals": 2
+  },
+  {
+    "name": "Ruben Vargas",
+    "team": "Switzerland",
     "goals": 2
   },
   {
