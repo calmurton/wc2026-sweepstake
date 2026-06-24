@@ -60,6 +60,11 @@
     "goals": 2
   },
   {
+    "name": "Daniel Muñoz",
+    "team": "Colombia",
+    "goals": 2
+  },
+  {
     "name": "Elijah Just",
     "team": "New Zealand",
     "goals": 2
@@ -118,10 +123,5 @@
     "name": "Yasin Ayari",
     "team": "Sweden",
     "goals": 2
-  },
-  {
-    "name": "Julián Quiñones",
-    "team": "Mexico",
-    "goals": 1
   }
 ]
