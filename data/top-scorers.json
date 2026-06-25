@@ -15,8 +15,18 @@
     "goals": 4
   },
   {
+    "name": "Vinicius Junior",
+    "team": "Brazil",
+    "goals": 4
+  },
+  {
     "name": "Deniz Undav",
     "team": "Germany",
+    "goals": 3
+  },
+  {
+    "name": "Ismael Saibari",
+    "team": "Morocco",
     "goals": 3
   },
   {
@@ -27,6 +37,11 @@
   {
     "name": "Jonathan David",
     "team": "Canada",
+    "goals": 3
+  },
+  {
+    "name": "Matheus Cunha",
+    "team": "Brazil",
     "goals": 3
   },
   {
@@ -85,8 +100,8 @@
     "goals": 2
   },
   {
-    "name": "Ismael Saibari",
-    "team": "Morocco",
+    "name": "Julián Quiñones",
+    "team": "Mexico",
     "goals": 2
   },
   {
@@ -95,28 +110,13 @@
     "goals": 2
   },
   {
-    "name": "Matheus Cunha",
-    "team": "Brazil",
-    "goals": 2
-  },
-  {
     "name": "Maximiliano Araújo",
     "team": "Uruguay",
     "goals": 2
   },
   {
-    "name": "Mikel Oyarzabal",
-    "team": "Spain",
-    "goals": 2
-  },
-  {
     "name": "Ruben Vargas",
     "team": "Switzerland",
-    "goals": 2
-  },
-  {
-    "name": "Vinicius Junior",
-    "team": "Brazil",
     "goals": 2
   },
   {
