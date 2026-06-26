@@ -15,6 +15,11 @@
     "goals": 4
   },
   {
+    "name": "Ousmane Dembélé",
+    "team": "France",
+    "goals": 4
+  },
+  {
     "name": "Vinicius Junior",
     "team": "Brazil",
     "goals": 4
@@ -35,6 +40,11 @@
     "goals": 3
   },
   {
+    "name": "Ismaïla Sarr",
+    "team": "Senegal",
+    "goals": 3
+  },
+  {
     "name": "Johan Manzambi",
     "team": "Switzerland",
     "goals": 3
@@ -48,16 +58,6 @@
     "name": "Matheus Cunha",
     "team": "Brazil",
     "goals": 3
-  },
-  {
-    "name": "Anthony Elanga",
-    "team": "Sweden",
-    "goals": 2
-  },
-  {
-    "name": "Cody Gakpo",
-    "team": "Netherlands",
-    "goals": 2
   },
   {
     "name": "Crysencio Summerville",
