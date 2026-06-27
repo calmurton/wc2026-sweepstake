@@ -35,6 +35,11 @@
     "goals": 3
   },
   {
+    "name": "Elijah Just",
+    "team": "New Zealand",
+    "goals": 3
+  },
+  {
     "name": "Ismael Saibari",
     "team": "Morocco",
     "goals": 3
@@ -80,16 +85,6 @@
     "goals": 2
   },
   {
-    "name": "Elijah Just",
-    "team": "New Zealand",
-    "goals": 2
-  },
-  {
-    "name": "Ermin Mahmic",
-    "team": "Bosnia and Herzegovina",
-    "goals": 2
-  },
-  {
     "name": "Folarin Balogun",
     "team": "USA",
     "goals": 2
@@ -112,6 +107,11 @@
   {
     "name": "Maximiliano Araújo",
     "team": "Uruguay",
+    "goals": 2
+  },
+  {
+    "name": "Ramin Rezaeian",
+    "team": "Iran",
     "goals": 2
   },
   {
