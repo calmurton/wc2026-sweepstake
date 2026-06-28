@@ -40,6 +40,11 @@
     "goals": 3
   },
   {
+    "name": "Harry Kane",
+    "team": "England",
+    "goals": 3
+  },
+  {
     "name": "Ismael Saibari",
     "team": "Morocco",
     "goals": 3
@@ -90,7 +95,7 @@
     "goals": 2
   },
   {
-    "name": "Harry Kane",
+    "name": "Jude Bellingham",
     "team": "England",
     "goals": 2
   },
@@ -112,11 +117,6 @@
   {
     "name": "Ramin Rezaeian",
     "team": "Iran",
-    "goals": 2
-  },
-  {
-    "name": "Ruben Vargas",
-    "team": "Switzerland",
     "goals": 2
   },
   {
