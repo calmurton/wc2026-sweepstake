@@ -2,7 +2,7 @@
   {
     "name": "Lionel Messi",
     "team": "Argentina",
-    "goals": 5
+    "goals": 6
   },
   {
     "name": "Erling Haaland",
@@ -70,6 +70,11 @@
     "goals": 3
   },
   {
+    "name": "Yoane Wissa",
+    "team": "DR Congo",
+    "goals": 3
+  },
+  {
     "name": "Crysencio Summerville",
     "team": "Netherlands",
     "goals": 2
@@ -85,18 +90,8 @@
     "goals": 2
   },
   {
-    "name": "Daniel Muñoz",
-    "team": "Colombia",
-    "goals": 2
-  },
-  {
     "name": "Folarin Balogun",
     "team": "USA",
-    "goals": 2
-  },
-  {
-    "name": "Jude Bellingham",
-    "team": "England",
     "goals": 2
   },
   {
@@ -107,6 +102,11 @@
   {
     "name": "Kai Havertz",
     "team": "Germany",
+    "goals": 2
+  },
+  {
+    "name": "Marko Arnautovic",
+    "team": "Austria",
     "goals": 2
   },
   {
