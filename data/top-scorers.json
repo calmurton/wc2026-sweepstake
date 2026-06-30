@@ -7,12 +7,12 @@
   {
     "name": "Erling Haaland",
     "team": "Norway",
-    "goals": 4
+    "goals": 5
   },
   {
     "name": "Kylian Mbappé",
     "team": "France",
-    "goals": 4
+    "goals": 5
   },
   {
     "name": "Ousmane Dembélé",
@@ -85,6 +85,11 @@
     "goals": 3
   },
   {
+    "name": "Amad Diallo",
+    "team": "Ivory Coast",
+    "goals": 2
+  },
+  {
     "name": "Crysencio Summerville",
     "team": "Netherlands",
     "goals": 2
@@ -112,11 +117,6 @@
   {
     "name": "Maximiliano Araújo",
     "team": "Uruguay",
-    "goals": 2
-  },
-  {
-    "name": "Ramin Rezaeian",
-    "team": "Iran",
     "goals": 2
   },
   {
