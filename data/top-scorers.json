@@ -30,6 +30,11 @@
     "goals": 3
   },
   {
+    "name": "Cody Gakpo",
+    "team": "Netherlands",
+    "goals": 3
+  },
+  {
     "name": "Deniz Undav",
     "team": "Germany",
     "goals": 3
@@ -65,6 +70,11 @@
     "goals": 3
   },
   {
+    "name": "Kai Havertz",
+    "team": "Germany",
+    "goals": 3
+  },
+  {
     "name": "Matheus Cunha",
     "team": "Brazil",
     "goals": 3
@@ -97,16 +107,6 @@
   {
     "name": "Julián Quiñones",
     "team": "Mexico",
-    "goals": 2
-  },
-  {
-    "name": "Kai Havertz",
-    "team": "Germany",
-    "goals": 2
-  },
-  {
-    "name": "Marko Arnautovic",
-    "team": "Austria",
     "goals": 2
   },
   {
