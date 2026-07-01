@@ -15,6 +15,11 @@
     "goals": 5
   },
   {
+    "name": "Harry Kane",
+    "team": "England",
+    "goals": 5
+  },
+  {
     "name": "Ousmane Dembélé",
     "team": "France",
     "goals": 4
@@ -42,11 +47,6 @@
   {
     "name": "Elijah Just",
     "team": "New Zealand",
-    "goals": 3
-  },
-  {
-    "name": "Harry Kane",
-    "team": "England",
     "goals": 3
   },
   {
