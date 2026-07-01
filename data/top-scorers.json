@@ -1,5 +1,10 @@
 [
   {
+    "name": "Kylian Mbappé",
+    "team": "France",
+    "goals": 6
+  },
+  {
     "name": "Lionel Messi",
     "team": "Argentina",
     "goals": 6
@@ -7,11 +12,6 @@
   {
     "name": "Erling Haaland",
     "team": "Norway",
-    "goals": 5
-  },
-  {
-    "name": "Kylian Mbappé",
-    "team": "France",
     "goals": 5
   },
   {
@@ -70,6 +70,11 @@
     "goals": 3
   },
   {
+    "name": "Julián Quiñones",
+    "team": "Mexico",
+    "goals": 3
+  },
+  {
     "name": "Kai Havertz",
     "team": "Germany",
     "goals": 3
@@ -110,13 +115,8 @@
     "goals": 2
   },
   {
-    "name": "Julián Quiñones",
+    "name": "Raúl Jiménez",
     "team": "Mexico",
-    "goals": 2
-  },
-  {
-    "name": "Maximiliano Araújo",
-    "team": "Uruguay",
     "goals": 2
   },
   {

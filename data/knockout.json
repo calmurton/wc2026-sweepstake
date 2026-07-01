@@ -1,1 +1,205 @@
-{"fixtures":[],"winner":null,"runnerup":null}
+{
+  "fixtures": [
+    {
+      "apiId": 537417,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-06-28T19:00:00Z",
+      "home": "South Africa",
+      "away": "Canada",
+      "status": "FINISHED",
+      "score": {
+        "h": 0,
+        "a": 1
+      }
+    },
+    {
+      "apiId": 537423,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-06-29T17:00:00Z",
+      "home": "Brazil",
+      "away": "Japan",
+      "status": "FINISHED",
+      "score": {
+        "h": 2,
+        "a": 1
+      }
+    },
+    {
+      "apiId": 537415,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-06-29T20:30:00Z",
+      "home": "Germany",
+      "away": "Paraguay",
+      "status": "FINISHED",
+      "score": {
+        "h": 4,
+        "a": 5
+      }
+    },
+    {
+      "apiId": 537418,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-06-30T01:00:00Z",
+      "home": "Netherlands",
+      "away": "Morocco",
+      "status": "FINISHED",
+      "score": {
+        "h": 3,
+        "a": 4
+      }
+    },
+    {
+      "apiId": 537424,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-06-30T17:00:00Z",
+      "home": "Ivory Coast",
+      "away": "Norway",
+      "status": "FINISHED",
+      "score": {
+        "h": 1,
+        "a": 2
+      }
+    },
+    {
+      "apiId": 537416,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-06-30T21:00:00Z",
+      "home": "France",
+      "away": "Sweden",
+      "status": "FINISHED",
+      "score": {
+        "h": 3,
+        "a": 0
+      }
+    },
+    {
+      "apiId": 537425,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-07-01T01:00:00Z",
+      "home": "Mexico",
+      "away": "Ecuador",
+      "status": "FINISHED",
+      "score": {
+        "h": 2,
+        "a": 0
+      }
+    },
+    {
+      "apiId": 537426,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-07-01T16:00:00Z",
+      "home": "England",
+      "away": "DR Congo",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537422,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-07-01T20:00:00Z",
+      "home": "Belgium",
+      "away": "Senegal",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537421,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-07-02T00:00:00Z",
+      "home": "USA",
+      "away": "Bosnia and Herzegovina",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537420,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-07-02T19:00:00Z",
+      "home": "Spain",
+      "away": "Austria",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537419,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-07-02T23:00:00Z",
+      "home": "Portugal",
+      "away": "Croatia",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537429,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-07-03T03:00:00Z",
+      "home": "Switzerland",
+      "away": "Algeria",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537428,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-07-03T18:00:00Z",
+      "home": "Australia",
+      "away": "Egypt",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537427,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-07-03T22:00:00Z",
+      "home": "Argentina",
+      "away": "Cape Verde",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537430,
+      "stage": "Round of 32",
+      "stageKey": "LAST_32",
+      "kickoffUTC": "2026-07-04T01:30:00Z",
+      "home": "Colombia",
+      "away": "Ghana",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537376,
+      "stage": "Round of 16",
+      "stageKey": "LAST_16",
+      "kickoffUTC": "2026-07-04T17:00:00Z",
+      "home": "Canada",
+      "away": "Morocco",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537375,
+      "stage": "Round of 16",
+      "stageKey": "LAST_16",
+      "kickoffUTC": "2026-07-04T21:00:00Z",
+      "home": "Paraguay",
+      "away": "France",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537377,
+      "stage": "Round of 16",
+      "stageKey": "LAST_16",
+      "kickoffUTC": "2026-07-05T20:00:00Z",
+      "home": "Brazil",
+      "away": "Norway",
+      "status": "TIMED"
+    }
+  ],
+  "winner": null,
+  "runnerup": null
+}
