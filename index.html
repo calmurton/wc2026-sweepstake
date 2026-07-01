@@ -296,6 +296,7 @@
     text-transform: uppercase; letter-spacing: 0.05em;
   }
   .fixture-grp { color: var(--gold); font-weight: 600; }
+  .fixture-stage { color: var(--info); font-weight: 600; }
   .fixture-body {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -737,8 +738,10 @@ function rankGroup(letter, stats) {
 }
 
 function tournamentProgress() {
-  const played = DATA.fixtures.filter(f => isPlayed(f.id)).length;
-  return { played, total: 104, groupPlayed: played, groupTotal: 72 };
+  const groupPlayed = DATA.fixtures.filter(f => isPlayed(f.id)).length;
+  const knockoutPlayed = (DATA.knockoutFixtures || []).filter(f => f.score).length;
+  const played = groupPlayed + knockoutPlayed;
+  return { played, total: 104, groupPlayed, groupTotal: 72 };
 }
 
 function leaders() {
@@ -864,19 +867,20 @@ function renderOverview() {
       </div>`;
   }).join('');
 
-  // Next up — next 6 unplayed fixtures
-  const upcoming = DATA.fixtures
-    .filter(f => !isPlayed(f.id))
-    .sort((a, b) => new Date(a.kickoffUTC) - new Date(b.kickoffUTC))
-    .slice(0, 6);
+  // Next up — next 6 unplayed fixtures (group + knockout combined)
+  const allUpcoming = [
+    ...DATA.fixtures.filter(f => !isPlayed(f.id)),
+    ...(DATA.knockoutFixtures || []).filter(f => !f.score),
+  ].sort((a, b) => new Date(a.kickoffUTC) - new Date(b.kickoffUTC));
+  const upcoming = allUpcoming.slice(0, 6);
   document.getElementById('nextFixtures').innerHTML = upcoming.map(renderFixtureCard).join('') || '<div class="empty"><div class="display">All matches played</div><div>Tournament is over.</div></div>';
   document.getElementById('nextUpMeta').textContent = upcoming.length ? `Next ${upcoming.length} matches (UK time)` : '';
 
-  // Latest results — last 6 played
-  const latest = DATA.fixtures
-    .filter(f => isPlayed(f.id))
-    .sort((a, b) => new Date(b.kickoffUTC) - new Date(a.kickoffUTC))
-    .slice(0, 6);
+  // Latest results — last 6 played (group + knockout combined)
+  const latest = [
+    ...DATA.fixtures.filter(f => isPlayed(f.id)),
+    ...(DATA.knockoutFixtures || []).filter(f => !!f.score),
+  ].sort((a, b) => new Date(b.kickoffUTC) - new Date(a.kickoffUTC)).slice(0, 6);
   document.getElementById('latestFixtures').innerHTML = latest.length
     ? latest.map(renderFixtureCard).join('')
     : '<div class="empty"><div class="display">No scores yet</div><div>Results will appear here once matches are played.</div></div>';
@@ -904,14 +908,19 @@ function countAlive(stats) {
 }
 
 function renderFixtureCard(fx) {
-  const played = isPlayed(fx.id);
-  const s = getScore(fx.id);
+  // Supports both group fixtures (fx.id + group) and knockout fixtures (fx.score + stage)
+  const isKnockout = !fx.group;
+  const played = isKnockout ? !!fx.score : isPlayed(fx.id);
+  const s = isKnockout ? (fx.score || null) : getScore(fx.id);
   const homeOwner = entrantOf(fx.home);
   const awayOwner = entrantOf(fx.away);
+  const stageLabel = isKnockout
+    ? `<span class="fixture-stage">${fx.stage}</span>`
+    : `<span class="fixture-grp">Grp ${fx.group}</span>`;
   return `
     <div class="fixture">
       <div class="fixture-meta">
-        <span><span class="fixture-grp">Grp ${fx.group}</span> · ${fmtUKDateTime(fx.kickoffUTC)}</span>
+        <span>${stageLabel} · ${fmtUKDateTime(fx.kickoffUTC)}</span>
         <span>${played ? 'FT' : 'Upcoming'}</span>
       </div>
       <div class="fixture-body">
@@ -1020,6 +1029,20 @@ function renderFixtures() {
   // Group by UK day
   const byDay = {};
   list.forEach(f => {
+    const k = ukDayKey(f.kickoffUTC);
+    (byDay[k] = byDay[k] || []).push(f);
+  });
+
+  // Merge in knockout fixtures with known teams
+  (DATA.knockoutFixtures || []).forEach(f => {
+    if (grp) return;  // group filter active — skip knockout
+    if (entrant) {
+      const t = DATA.entrants.find(e => e.name === entrant)?.team;
+      if (t && f.home !== t && f.away !== t) return;
+    }
+    const played = !!f.score;
+    if (status === 'upcoming' && played) return;
+    if (status === 'played' && !played) return;
     const k = ukDayKey(f.kickoffUTC);
     (byDay[k] = byDay[k] || []).push(f);
   });
@@ -1232,15 +1255,21 @@ async function bootstrap() {
     } catch (e) { return null; }
   };
 
-  const [live, scorers, updated] = await Promise.all([
+  const [live, scorers, updated, knockout] = await Promise.all([
     tryFetch('./data/scores.json'),
     tryFetch('./data/top-scorers.json'),
     tryFetch('./data/last-updated.json'),
+    tryFetch('./data/knockout.json'),
   ]);
 
   if (live && typeof live === 'object') DATA.embeddedScores = live;
   if (Array.isArray(scorers)) DATA.topScorers = scorers;
   if (updated && updated.timestamp) DATA.lastRefreshed = updated.timestamp;
+  if (knockout && typeof knockout === 'object') {
+    DATA.knockoutFixtures = knockout.fixtures || [];
+    DATA.knockoutWinner   = knockout.winner   || null;
+    DATA.knockoutRunnerup = knockout.runnerup || null;
+  }
 
   renderRefreshStamp();
   renderAll();
