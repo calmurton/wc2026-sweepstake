@@ -1,5 +1,10 @@
 name: Update World Cup scores
 
+# Runs every 20 minutes during the tournament window (UTC).
+# World Cup 2026 runs 11 Jun – 19 Jul. Outside that window the workflow is dormant.
+#
+# Manual trigger ("Run workflow" button) always works regardless of date.
+
 on:
   schedule:
     - cron: '*/20 * * * *'
@@ -11,6 +16,9 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+    # Skip scheduled runs outside tournament window — save CI minutes.
+    # The check is best-effort; if you want strict control, comment-out the schedule
+    # trigger after the tournament and rely on workflow_dispatch only.
     steps:
       - name: Check tournament window
         id: window
@@ -48,7 +56,7 @@ jobs:
         run: |
           git config user.name "World Cup Bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/scores.json data/top-scorers.json data/last-updated.json
+          git add data/scores.json data/top-scorers.json data/last-updated.json data/knockout.json
           if git diff --cached --quiet; then
             echo "No score changes detected."
           else
