@@ -111,7 +111,11 @@
       "kickoffUTC": "2026-07-01T20:00:00Z",
       "home": "Belgium",
       "away": "Senegal",
-      "status": "TIMED"
+      "status": "PAUSED",
+      "score": {
+        "h": 3,
+        "a": 2
+      }
     },
     {
       "apiId": 537421,

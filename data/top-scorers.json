@@ -20,6 +20,11 @@
     "goals": 5
   },
   {
+    "name": "Ismaïla Sarr",
+    "team": "Senegal",
+    "goals": 4
+  },
+  {
     "name": "Ousmane Dembélé",
     "team": "France",
     "goals": 4
@@ -52,11 +57,6 @@
   {
     "name": "Ismael Saibari",
     "team": "Morocco",
-    "goals": 3
-  },
-  {
-    "name": "Ismaïla Sarr",
-    "team": "Senegal",
     "goals": 3
   },
   {
