@@ -8,11 +8,8 @@ Required env: FOOTBALL_DATA_TOKEN (free tier OK — World Cup is included).
 Output files:
   data/scores.json        — { "<fixtureId>": { "h": int, "a": int } }
   data/top-scorers.json   — [ { "name": str, "team": str, "goals": int }, ... ]
+  data/knockout.json      — { "fixtures": [...], "winner": str|null, "runnerup": str|null }
   data/last-updated.json  — { "timestamp": ISO, "matchesFound": N, "scorersFound": N }
-
-The script is intentionally tolerant of failure: if the scorers endpoint errors
-we still write scores; if the API is unreachable the existing files are left
-untouched so the dashboard keeps showing the last good data.
 """
 
 import json
@@ -37,44 +34,42 @@ DATA_DIR = REPO_ROOT / "data"
 DATA_DIR.mkdir(exist_ok=True)
 
 # ── Team name normalisation ──────────────────────────────────────────────
-# football-data.org's names sometimes differ from ours. Map both ways.
 TEAM_ALIASES = {
-    # API name → our canonical name
-    "United States": "USA",
-    "USA": "USA",
-    "US": "USA",
-    "Czech Republic": "Czech Republic",
-    "Czechia": "Czech Republic",
-    "Türkiye": "Turkey",
-    "Turkey": "Turkey",
-    "Korea Republic": "South Korea",
-    "Republic of Korea": "South Korea",
-    "South Korea": "South Korea",
-    "IR Iran": "Iran",
-    "Iran": "Iran",
+    "United States": "USA", "USA": "USA", "US": "USA",
+    "Czech Republic": "Czech Republic", "Czechia": "Czech Republic",
+    "Türkiye": "Turkey", "Turkey": "Turkey",
+    "Korea Republic": "South Korea", "Republic of Korea": "South Korea", "South Korea": "South Korea",
+    "IR Iran": "Iran", "Iran": "Iran",
     "Bosnia and Herzegovina": "Bosnia and Herzegovina",
     "Bosnia-Herzegovina": "Bosnia and Herzegovina",
     "Bosnia & Herzegovina": "Bosnia and Herzegovina",
-    "Cabo Verde": "Cape Verde",
-    "Cape Verde": "Cape Verde",
-    "Cape Verde Islands": "Cape Verde",
-    "DR Congo": "DR Congo",
-    "Congo DR": "DR Congo",
+    "Cabo Verde": "Cape Verde", "Cape Verde": "Cape Verde", "Cape Verde Islands": "Cape Verde",
+    "DR Congo": "DR Congo", "Congo DR": "DR Congo",
     "Democratic Republic of the Congo": "DR Congo",
     "Democratic Republic of Congo": "DR Congo",
-    "Côte d'Ivoire": "Ivory Coast",
-    "Cote d'Ivoire": "Ivory Coast",
-    "Ivory Coast": "Ivory Coast",
-    "Curaçao": "Curaçao",
-    "Curacao": "Curaçao",
-    "Saudi Arabia": "Saudi Arabia",
-    "KSA": "Saudi Arabia",
-    "New Zealand": "New Zealand",
-    "South Africa": "South Africa",
+    "Côte d'Ivoire": "Ivory Coast", "Cote d'Ivoire": "Ivory Coast", "Ivory Coast": "Ivory Coast",
+    "Curaçao": "Curaçao", "Curacao": "Curaçao",
+    "Saudi Arabia": "Saudi Arabia", "KSA": "Saudi Arabia",
+    "New Zealand": "New Zealand", "South Africa": "South Africa",
 }
+
+# ── Knockout stage display names ─────────────────────────────────────────
+KNOCKOUT_STAGES = {
+    "LAST_32":       "Round of 32",
+    "LAST_16":       "Round of 16",
+    "QUARTER_FINALS": "Quarter-finals",
+    "SEMI_FINALS":   "Semi-finals",
+    "THIRD_PLACE":   "Third Place",
+    "FINAL":         "Final",
+}
+
+# Stage keys that are part of the group stage (skip for knockout processing)
+GROUP_STAGE_KEYS = {"GROUP_STAGE", "FIRST_STAGE", "PRELIMINARY_ROUND"}
 
 
 def normalize(name: str) -> str:
+    if not name:
+        return name
     return TEAM_ALIASES.get(name, name)
 
 
@@ -87,7 +82,7 @@ def api_get(endpoint: str) -> dict:
         return json.loads(r.read())
 
 
-# ── Load our canonical fixtures (for API match → fixture ID mapping) ─────
+# ── Load our canonical group-stage fixtures ──────────────────────────────
 FIXTURES_FILE = DATA_DIR / "fixtures.json"
 if not FIXTURES_FILE.exists():
     print(f"ERROR: {FIXTURES_FILE} missing — cannot map API matches", file=sys.stderr)
@@ -98,43 +93,66 @@ with FIXTURES_FILE.open(encoding="utf-8") as f:
 
 
 def map_to_fixture_id(home_api: str, away_api: str, utc_kickoff: str):
-    """Try date+pair first, then fall back to just the team pair."""
     h = normalize(home_api)
     a = normalize(away_api)
     utc_date = utc_kickoff[:10] if utc_kickoff else ""
-    # Exact match: same teams, same UTC calendar date
     for fx in OUR_FIXTURES:
         if fx["home"] == h and fx["away"] == a and fx["kickoffUTC"][:10] == utc_date:
             return fx["id"]
-    # Loose match: same team pair only (kickoff may have shifted by a day across timezones)
     candidates = [fx for fx in OUR_FIXTURES if fx["home"] == h and fx["away"] == a]
     if len(candidates) == 1:
         return candidates[0]["id"]
-    # Reverse pair fallback (in case API has home/away swapped vs our data)
     candidates = [fx for fx in OUR_FIXTURES if fx["home"] == a and fx["away"] == h]
     if len(candidates) == 1:
         return candidates[0]["id"]
     return None
 
 
-def fetch_scores() -> dict:
-    """Return { fixtureIdStr: { 'h': int, 'a': int } } for matches with a score."""
+def extract_score(m: dict):
+    """Extract best available score from a match object. Returns (h, a) or (None, None)."""
+    s = m.get("score", {})
+    status = m.get("status", "")
+    ft = s.get("fullTime", {})
+    h, a = ft.get("home"), ft.get("away")
+
+    if h is None or a is None:
+        if status in ("IN_PLAY", "PAUSED"):
+            ht = s.get("halfTime", {})
+            h, a = ht.get("home"), ht.get("away")
+        elif status == "FINISHED":
+            rt = s.get("regularTime", {})
+            h, a = rt.get("home"), rt.get("away")
+            if h is None or a is None:
+                ht = s.get("halfTime", {})
+                h, a = ht.get("home"), ht.get("away")
+    return h, a
+
+
+def fetch_all_matches():
     try:
         data = api_get(f"/competitions/{COMPETITION_CODE}/matches")
     except (urllib.error.HTTPError, urllib.error.URLError) as e:
         print(f"ERROR: matches endpoint failed: {e}", file=sys.stderr)
         sys.exit(2)
+    return data.get("matches", [])
 
+
+def build_group_scores(matches):
+    """Map group stage matches to our fixture IDs."""
     scores = {}
     unmatched = []
-    for m in data.get("matches", []):
+    for m in matches:
+        stage = m.get("stage", "")
+        if stage not in GROUP_STAGE_KEYS and stage != "":
+            # Skip non-group matches — they go into knockout
+            if stage in KNOCKOUT_STAGES:
+                continue
         home = m["homeTeam"]["name"]
         away = m["awayTeam"]["name"]
         utc = m.get("utcDate", "")
         status = m.get("status", "")
         s = m.get("score", {})
 
-        # Debug: print raw score data for any non-scheduled match
         if status not in ("SCHEDULED", "TIMED"):
             ft_d = s.get("fullTime", {})
             rt_d = s.get("regularTime", {})
@@ -145,44 +163,95 @@ def fetch_scores() -> dict:
         if fx_id is None:
             unmatched.append(f"{home} vs {away} ({utc[:10]})")
             continue
-        ft = s.get("fullTime", {})
-        h, a = ft.get("home"), ft.get("away")
 
+        h, a = extract_score(m)
         if h is None or a is None:
-            if status in ("IN_PLAY", "PAUSED"):
-                # Live — best available partial score
-                ht = s.get("halfTime", {})
-                h, a = ht.get("home"), ht.get("away")
-            elif status == "FINISHED":
-                # Free-tier lag: fullTime not yet populated despite match being over.
-                # Try regularTime (after 90 mins, before AET), then halfTime as last resort.
-                rt = s.get("regularTime", {})
-                h, a = rt.get("home"), rt.get("away")
-                if h is None or a is None:
-                    ht = s.get("halfTime", {})
-                    h, a = ht.get("home"), ht.get("away")
-                if isinstance(h, int) and isinstance(a, int):
-                    print(f"⚠ FINISHED match {home} vs {away} used fallback score (fullTime not yet populated)", file=sys.stderr)
+            continue
+        if status == "FINISHED":
+            hh, aa = s.get("fullTime", {}).get("home"), s.get("fullTime", {}).get("away")
+            if hh is None:
+                print(f"⚠ FINISHED match {home} vs {away} used fallback score", file=sys.stderr)
         if isinstance(h, int) and isinstance(a, int):
             scores[str(fx_id)] = {"h": h, "a": a}
 
     if unmatched:
-        print(f"⚠ {len(unmatched)} matches could not be mapped to our fixtures:", file=sys.stderr)
-        for u in unmatched[:20]:
-            print(f"  - {u}", file=sys.stderr)
-        if len(unmatched) > 20:
-            print(f"  ... and {len(unmatched) - 20} more", file=sys.stderr)
+        non_knockout = [u for u in unmatched if not u.startswith("None")]
+        if non_knockout:
+            print(f"⚠ {len(non_knockout)} group matches could not be mapped:", file=sys.stderr)
+            for u in non_knockout[:10]:
+                print(f"  - {u}", file=sys.stderr)
     return scores
 
 
+def build_knockout(matches):
+    """Extract knockout fixtures with known teams. Determine winner/runner-up from final."""
+    knockout = []
+    winner = None
+    runnerup = None
+
+    for m in matches:
+        stage = m.get("stage", "")
+        if stage not in KNOCKOUT_STAGES:
+            continue
+
+        home_name = m["homeTeam"].get("name")
+        away_name = m["awayTeam"].get("name")
+        # Skip placeholders where teams aren't determined yet
+        if not home_name or not away_name:
+            continue
+
+        home = normalize(home_name)
+        away = normalize(away_name)
+        status = m.get("status", "")
+        utc = m.get("utcDate", "")
+
+        entry = {
+            "apiId": m.get("id"),
+            "stage": KNOCKOUT_STAGES[stage],
+            "stageKey": stage,
+            "kickoffUTC": utc,
+            "home": home,
+            "away": away,
+            "status": status,
+        }
+
+        h, a = extract_score(m)
+        if isinstance(h, int) and isinstance(a, int):
+            entry["score"] = {"h": h, "a": a}
+
+            # Determine winner/runner-up from the final
+            if stage == "FINAL" and status == "FINISHED":
+                s = m.get("score", {})
+                penalties = s.get("penalties", {})
+                ph = penalties.get("home") if penalties else None
+                pa = penalties.get("away") if penalties else None
+                if isinstance(ph, int) and isinstance(pa, int):
+                    # Decided by penalties
+                    if ph > pa:
+                        winner, runnerup = home, away
+                    else:
+                        winner, runnerup = away, home
+                elif h > a:
+                    winner, runnerup = home, away
+                elif a > h:
+                    winner, runnerup = away, home
+
+        knockout.append(entry)
+
+    # Sort by kickoff time
+    knockout.sort(key=lambda x: x.get("kickoffUTC", ""))
+    print(f"  Knockout fixtures with known teams: {len(knockout)}")
+    if winner:
+        print(f"  🏆 Winner: {winner}, Runner-up: {runnerup}")
+    return knockout, winner, runnerup
+
+
 def fetch_scorers() -> list:
-    """Return top scorers as [{ name, team, goals }, ...] sorted by goals desc."""
     try:
         data = api_get(f"/competitions/{COMPETITION_CODE}/scorers?limit=25")
     except Exception as e:
         print(f"⚠ scorers endpoint failed (non-fatal): {e}", file=sys.stderr)
         return []
-
     out = []
     for s in data.get("scorers", []):
         player = s.get("player", {})
@@ -195,14 +264,17 @@ def fetch_scorers() -> list:
             "team": normalize(team["name"]),
             "goals": goals,
         })
-    # API returns sorted by goals desc but resort defensively
     out.sort(key=lambda p: (-p["goals"], p["name"]))
     return out
 
 
 def main() -> int:
     print(f"Fetching from {API_BASE}/competitions/{COMPETITION_CODE} …")
-    scores = fetch_scores()
+    matches = fetch_all_matches()
+    print(f"  Got {len(matches)} total matches from API.")
+
+    scores = build_group_scores(matches)
+    knockout, winner, runnerup = build_knockout(matches)
     scorers = fetch_scorers()
 
     (DATA_DIR / "scores.json").write_text(
@@ -212,14 +284,23 @@ def main() -> int:
         json.dumps(scorers, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
+    (DATA_DIR / "knockout.json").write_text(
+        json.dumps({
+            "fixtures": knockout,
+            "winner": winner,
+            "runnerup": runnerup,
+        }, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
     (DATA_DIR / "last-updated.json").write_text(
         json.dumps({
             "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
             "matchesFound": len(scores),
+            "knockoutFound": len(knockout),
             "scorersFound": len(scorers),
         }, indent=2) + "\n"
     )
-    print(f"✓ Wrote {len(scores)} match scores, {len(scorers)} scorers")
+    print(f"✓ Wrote {len(scores)} group scores, {len(knockout)} knockout fixtures, {len(scorers)} scorers")
     return 0
 
 
