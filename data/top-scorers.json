@@ -90,6 +90,11 @@
     "goals": 3
   },
   {
+    "name": "Mikel Oyarzabal",
+    "team": "Spain",
+    "goals": 3
+  },
+  {
     "name": "Yoane Wissa",
     "team": "DR Congo",
     "goals": 3
@@ -117,11 +122,6 @@
   {
     "name": "Raúl Jiménez",
     "team": "Mexico",
-    "goals": 2
-  },
-  {
-    "name": "Yasin Ayari",
-    "team": "Sweden",
     "goals": 2
   }
 ]
