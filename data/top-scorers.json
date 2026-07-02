@@ -55,6 +55,11 @@
     "goals": 3
   },
   {
+    "name": "Folarin Balogun",
+    "team": "USA",
+    "goals": 3
+  },
+  {
     "name": "Ismael Saibari",
     "team": "Morocco",
     "goals": 3
@@ -107,11 +112,6 @@
   {
     "name": "Daichi Kamada",
     "team": "Japan",
-    "goals": 2
-  },
-  {
-    "name": "Folarin Balogun",
-    "team": "USA",
     "goals": 2
   },
   {
