@@ -25,6 +25,11 @@
     "goals": 4
   },
   {
+    "name": "Mikel Oyarzabal",
+    "team": "Spain",
+    "goals": 4
+  },
+  {
     "name": "Ousmane Dembélé",
     "team": "France",
     "goals": 4
@@ -42,6 +47,11 @@
   {
     "name": "Cody Gakpo",
     "team": "Netherlands",
+    "goals": 3
+  },
+  {
+    "name": "Cristiano Ronaldo",
+    "team": "Portugal",
     "goals": 3
   },
   {
@@ -90,18 +100,13 @@
     "goals": 3
   },
   {
-    "name": "Mikel Oyarzabal",
-    "team": "Spain",
-    "goals": 3
-  },
-  {
     "name": "Yoane Wissa",
     "team": "DR Congo",
     "goals": 3
   },
   {
-    "name": "Amad Diallo",
-    "team": "Ivory Coast",
+    "name": "Breel Embolo",
+    "team": "Switzerland",
     "goals": 2
   },
   {
@@ -112,11 +117,6 @@
   {
     "name": "Cyle Larin",
     "team": "Canada",
-    "goals": 2
-  },
-  {
-    "name": "Daichi Kamada",
-    "team": "Japan",
     "goals": 2
   },
   {

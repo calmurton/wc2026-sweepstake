@@ -137,9 +137,9 @@
       "kickoffUTC": "2026-07-02T19:00:00Z",
       "home": "Spain",
       "away": "Austria",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": {
-        "h": 2,
+        "h": 3,
         "a": 0
       }
     },
@@ -150,7 +150,11 @@
       "kickoffUTC": "2026-07-02T23:00:00Z",
       "home": "Portugal",
       "away": "Croatia",
-      "status": "TIMED"
+      "status": "FINISHED",
+      "score": {
+        "h": 2,
+        "a": 1
+      }
     },
     {
       "apiId": 537429,
@@ -159,7 +163,11 @@
       "kickoffUTC": "2026-07-03T03:00:00Z",
       "home": "Switzerland",
       "away": "Algeria",
-      "status": "TIMED"
+      "status": "FINISHED",
+      "score": {
+        "h": 2,
+        "a": 0
+      }
     },
     {
       "apiId": 537428,
