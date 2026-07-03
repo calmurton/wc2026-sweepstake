@@ -176,7 +176,11 @@
       "kickoffUTC": "2026-07-03T18:00:00Z",
       "home": "Australia",
       "away": "Egypt",
-      "status": "TIMED"
+      "status": "IN_PLAY",
+      "score": {
+        "h": 1,
+        "a": 1
+      }
     },
     {
       "apiId": 537427,
