@@ -176,10 +176,10 @@
       "kickoffUTC": "2026-07-03T18:00:00Z",
       "home": "Australia",
       "away": "Egypt",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": {
-        "h": 1,
-        "a": 1
+        "h": 3,
+        "a": 5
       }
     },
     {
@@ -189,7 +189,11 @@
       "kickoffUTC": "2026-07-03T22:00:00Z",
       "home": "Argentina",
       "away": "Cape Verde",
-      "status": "TIMED"
+      "status": "IN_PLAY",
+      "score": {
+        "h": 2,
+        "a": 1
+      }
     },
     {
       "apiId": 537430,
