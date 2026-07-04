@@ -215,7 +215,11 @@
       "kickoffUTC": "2026-07-04T17:00:00Z",
       "home": "Canada",
       "away": "Morocco",
-      "status": "TIMED"
+      "status": "FINISHED",
+      "score": {
+        "h": 0,
+        "a": 3
+      }
     },
     {
       "apiId": 537375,
