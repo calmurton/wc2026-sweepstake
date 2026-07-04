@@ -189,10 +189,10 @@
       "kickoffUTC": "2026-07-03T22:00:00Z",
       "home": "Argentina",
       "away": "Cape Verde",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": {
-        "h": 2,
-        "a": 1
+        "h": 3,
+        "a": 2
       }
     },
     {
@@ -202,7 +202,11 @@
       "kickoffUTC": "2026-07-04T01:30:00Z",
       "home": "Colombia",
       "away": "Ghana",
-      "status": "TIMED"
+      "status": "FINISHED",
+      "score": {
+        "h": 1,
+        "a": 0
+      }
     },
     {
       "apiId": 537376,
@@ -241,12 +245,39 @@
       "status": "TIMED"
     },
     {
+      "apiId": 537379,
+      "stage": "Round of 16",
+      "stageKey": "LAST_16",
+      "kickoffUTC": "2026-07-06T19:00:00Z",
+      "home": "Portugal",
+      "away": "Spain",
+      "status": "TIMED"
+    },
+    {
       "apiId": 537380,
       "stage": "Round of 16",
       "stageKey": "LAST_16",
       "kickoffUTC": "2026-07-07T00:00:00Z",
       "home": "USA",
       "away": "Belgium",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537381,
+      "stage": "Round of 16",
+      "stageKey": "LAST_16",
+      "kickoffUTC": "2026-07-07T16:00:00Z",
+      "home": "Argentina",
+      "away": "Egypt",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537382,
+      "stage": "Round of 16",
+      "stageKey": "LAST_16",
+      "kickoffUTC": "2026-07-07T20:00:00Z",
+      "home": "Switzerland",
+      "away": "Colombia",
       "status": "TIMED"
     }
   ],
