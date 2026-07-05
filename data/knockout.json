@@ -287,6 +287,15 @@
       "home": "Switzerland",
       "away": "Colombia",
       "status": "TIMED"
+    },
+    {
+      "apiId": 537383,
+      "stage": "Quarter-finals",
+      "stageKey": "QUARTER_FINALS",
+      "kickoffUTC": "2026-07-09T20:00:00Z",
+      "home": "France",
+      "away": "Morocco",
+      "status": "TIMED"
     }
   ],
   "winner": null,
