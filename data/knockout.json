@@ -251,10 +251,14 @@
       "apiId": 537378,
       "stage": "Round of 16",
       "stageKey": "LAST_16",
-      "kickoffUTC": "2026-07-06T00:00:00Z",
+      "kickoffUTC": "2026-07-06T01:00:00Z",
       "home": "Mexico",
       "away": "England",
-      "status": "TIMED"
+      "status": "FINISHED",
+      "score": {
+        "h": 2,
+        "a": 3
+      }
     },
     {
       "apiId": 537379,
@@ -299,6 +303,15 @@
       "kickoffUTC": "2026-07-09T20:00:00Z",
       "home": "France",
       "away": "Morocco",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537385,
+      "stage": "Quarter-finals",
+      "stageKey": "QUARTER_FINALS",
+      "kickoffUTC": "2026-07-11T21:00:00Z",
+      "home": "Norway",
+      "away": "England",
       "status": "TIMED"
     }
   ],

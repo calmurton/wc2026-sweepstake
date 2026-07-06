@@ -17,11 +17,21 @@
   {
     "name": "Harry Kane",
     "team": "England",
-    "goals": 5
+    "goals": 6
   },
   {
     "name": "Ismaïla Sarr",
     "team": "Senegal",
+    "goals": 4
+  },
+  {
+    "name": "Jude Bellingham",
+    "team": "England",
+    "goals": 4
+  },
+  {
+    "name": "Julián Quiñones",
+    "team": "Mexico",
     "goals": 4
   },
   {
@@ -85,11 +95,6 @@
     "goals": 3
   },
   {
-    "name": "Julián Quiñones",
-    "team": "Mexico",
-    "goals": 3
-  },
-  {
     "name": "Kai Havertz",
     "team": "Germany",
     "goals": 3
@@ -97,6 +102,11 @@
   {
     "name": "Matheus Cunha",
     "team": "Brazil",
+    "goals": 3
+  },
+  {
+    "name": "Raúl Jiménez",
+    "team": "Mexico",
     "goals": 3
   },
   {
@@ -110,18 +120,8 @@
     "goals": 2
   },
   {
-    "name": "Crysencio Summerville",
-    "team": "Netherlands",
-    "goals": 2
-  },
-  {
     "name": "Cyle Larin",
     "team": "Canada",
-    "goals": 2
-  },
-  {
-    "name": "Raúl Jiménez",
-    "team": "Mexico",
     "goals": 2
   }
 ]
