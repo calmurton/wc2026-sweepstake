@@ -267,10 +267,10 @@
       "kickoffUTC": "2026-07-06T19:00:00Z",
       "home": "Portugal",
       "away": "Spain",
-      "status": "LIVE",
+      "status": "FINISHED",
       "score": {
         "h": 0,
-        "a": 0
+        "a": 1
       }
     },
     {
