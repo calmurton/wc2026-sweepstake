@@ -267,7 +267,11 @@
       "kickoffUTC": "2026-07-06T19:00:00Z",
       "home": "Portugal",
       "away": "Spain",
-      "status": "TIMED"
+      "status": "LIVE",
+      "score": {
+        "h": 0,
+        "a": 0
+      }
     },
     {
       "apiId": 537380,
