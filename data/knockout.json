@@ -293,7 +293,11 @@
       "kickoffUTC": "2026-07-07T16:00:00Z",
       "home": "Argentina",
       "away": "Egypt",
-      "status": "TIMED"
+      "status": "FINISHED",
+      "score": {
+        "h": 3,
+        "a": 2
+      }
     },
     {
       "apiId": 537382,
