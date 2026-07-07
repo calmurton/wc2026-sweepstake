@@ -306,7 +306,11 @@
       "kickoffUTC": "2026-07-07T20:00:00Z",
       "home": "Switzerland",
       "away": "Colombia",
-      "status": "TIMED"
+      "status": "PAUSED",
+      "score": {
+        "h": 0,
+        "a": 0
+      }
     },
     {
       "apiId": 537383,
