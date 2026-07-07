@@ -280,7 +280,11 @@
       "kickoffUTC": "2026-07-07T00:00:00Z",
       "home": "USA",
       "away": "Belgium",
-      "status": "TIMED"
+      "status": "FINISHED",
+      "score": {
+        "h": 1,
+        "a": 4
+      }
     },
     {
       "apiId": 537381,
@@ -307,6 +311,15 @@
       "kickoffUTC": "2026-07-09T20:00:00Z",
       "home": "France",
       "away": "Morocco",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537384,
+      "stage": "Quarter-finals",
+      "stageKey": "QUARTER_FINALS",
+      "kickoffUTC": "2026-07-10T19:00:00Z",
+      "home": "Spain",
+      "away": "Belgium",
       "status": "TIMED"
     },
     {
