@@ -306,10 +306,10 @@
       "kickoffUTC": "2026-07-07T20:00:00Z",
       "home": "Switzerland",
       "away": "Colombia",
-      "status": "PAUSED",
+      "status": "FINISHED",
       "score": {
-        "h": 0,
-        "a": 0
+        "h": 4,
+        "a": 3
       }
     },
     {
@@ -337,6 +337,15 @@
       "kickoffUTC": "2026-07-11T21:00:00Z",
       "home": "Norway",
       "away": "England",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537386,
+      "stage": "Quarter-finals",
+      "stageKey": "QUARTER_FINALS",
+      "kickoffUTC": "2026-07-12T01:00:00Z",
+      "home": "Argentina",
+      "away": "Switzerland",
       "status": "TIMED"
     }
   ],
