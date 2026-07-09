@@ -319,7 +319,11 @@
       "kickoffUTC": "2026-07-09T20:00:00Z",
       "home": "France",
       "away": "Morocco",
-      "status": "TIMED"
+      "status": "FINISHED",
+      "score": {
+        "h": 2,
+        "a": 0
+      }
     },
     {
       "apiId": 537384,
