@@ -332,9 +332,9 @@
       "kickoffUTC": "2026-07-10T19:00:00Z",
       "home": "Spain",
       "away": "Belgium",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": {
-        "h": 1,
+        "h": 2,
         "a": 1
       }
     },
