@@ -55,6 +55,11 @@
     "goals": 3
   },
   {
+    "name": "Charles De Ketelaere",
+    "team": "Belgium",
+    "goals": 3
+  },
+  {
     "name": "Cody Gakpo",
     "team": "Netherlands",
     "goals": 3
@@ -118,10 +123,5 @@
     "name": "Yoane Wissa",
     "team": "DR Congo",
     "goals": 3
-  },
-  {
-    "name": "Cyle Larin",
-    "team": "Canada",
-    "goals": 2
   }
 ]
