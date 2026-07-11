@@ -355,6 +355,15 @@
       "home": "Argentina",
       "away": "Switzerland",
       "status": "TIMED"
+    },
+    {
+      "apiId": 537387,
+      "stage": "Semi-finals",
+      "stageKey": "SEMI_FINALS",
+      "kickoffUTC": "2026-07-14T19:00:00Z",
+      "home": "France",
+      "away": "Spain",
+      "status": "TIMED"
     }
   ],
   "winner": null,
