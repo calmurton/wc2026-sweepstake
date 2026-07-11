@@ -345,10 +345,10 @@
       "kickoffUTC": "2026-07-11T21:00:00Z",
       "home": "Norway",
       "away": "England",
-      "status": "IN_PLAY",
+      "status": "PAUSED",
       "score": {
-        "h": 2,
-        "a": 1
+        "h": 1,
+        "a": 2
       }
     },
     {
