@@ -20,6 +20,11 @@
     "goals": 6
   },
   {
+    "name": "Jude Bellingham",
+    "team": "England",
+    "goals": 5
+  },
+  {
     "name": "Ousmane Dembélé",
     "team": "France",
     "goals": 5
@@ -27,11 +32,6 @@
   {
     "name": "Ismaïla Sarr",
     "team": "Senegal",
-    "goals": 4
-  },
-  {
-    "name": "Jude Bellingham",
-    "team": "England",
     "goals": 4
   },
   {
