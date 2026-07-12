@@ -254,7 +254,7 @@
       "kickoffUTC": "2026-07-06T01:00:00Z",
       "home": "Mexico",
       "away": "England",
-      "status": "2026-07-06 01:00:00Z",
+      "status": "FINISHED",
       "score": {
         "h": 2,
         "a": 3
@@ -371,6 +371,15 @@
       "kickoffUTC": "2026-07-14T19:00:00Z",
       "home": "France",
       "away": "Spain",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537388,
+      "stage": "Semi-finals",
+      "stageKey": "SEMI_FINALS",
+      "kickoffUTC": "2026-07-15T19:00:00Z",
+      "home": "England",
+      "away": "Argentina",
       "status": "TIMED"
     }
   ],
