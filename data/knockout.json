@@ -345,7 +345,7 @@
       "kickoffUTC": "2026-07-11T21:00:00Z",
       "home": "Norway",
       "away": "England",
-      "status": "PAUSED",
+      "status": "FINISHED",
       "score": {
         "h": 1,
         "a": 2
@@ -358,7 +358,11 @@
       "kickoffUTC": "2026-07-12T01:00:00Z",
       "home": "Argentina",
       "away": "Switzerland",
-      "status": "TIMED"
+      "status": "IN_PLAY",
+      "score": {
+        "h": 0,
+        "a": 0
+      }
     },
     {
       "apiId": 537387,
