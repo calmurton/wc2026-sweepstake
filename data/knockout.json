@@ -358,10 +358,10 @@
       "kickoffUTC": "2026-07-12T01:00:00Z",
       "home": "Argentina",
       "away": "Switzerland",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": {
-        "h": 0,
-        "a": 0
+        "h": 3,
+        "a": 1
       }
     },
     {
