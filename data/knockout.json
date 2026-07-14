@@ -371,7 +371,7 @@
       "kickoffUTC": "2026-07-14T19:00:00Z",
       "home": "France",
       "away": "Spain",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": {
         "h": 0,
         "a": 2
