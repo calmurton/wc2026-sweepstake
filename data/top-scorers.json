@@ -55,11 +55,6 @@
     "goals": 3
   },
   {
-    "name": "Charles De Ketelaere",
-    "team": "Belgium",
-    "goals": 3
-  },
-  {
     "name": "Cody Gakpo",
     "team": "Netherlands",
     "goals": 3
@@ -102,6 +97,11 @@
   {
     "name": "Kai Havertz",
     "team": "Germany",
+    "goals": 3
+  },
+  {
+    "name": "Lautaro Martínez",
+    "team": "Argentina",
     "goals": 3
   },
   {

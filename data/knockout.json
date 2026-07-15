@@ -384,10 +384,10 @@
       "kickoffUTC": "2026-07-15T19:00:00Z",
       "home": "England",
       "away": "Argentina",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": {
         "h": 1,
-        "a": 0
+        "a": 2
       }
     }
   ],
