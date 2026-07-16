@@ -389,6 +389,24 @@
         "h": 1,
         "a": 2
       }
+    },
+    {
+      "apiId": 537389,
+      "stage": "Third Place",
+      "stageKey": "THIRD_PLACE",
+      "kickoffUTC": "2026-07-18T21:00:00Z",
+      "home": "France",
+      "away": "England",
+      "status": "TIMED"
+    },
+    {
+      "apiId": 537390,
+      "stage": "Final",
+      "stageKey": "FINAL",
+      "kickoffUTC": "2026-07-19T19:00:00Z",
+      "home": "Spain",
+      "away": "Argentina",
+      "status": "TIMED"
     }
   ],
   "winner": null,
