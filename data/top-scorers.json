@@ -2,7 +2,7 @@
   {
     "name": "Kylian Mbappé",
     "team": "France",
-    "goals": 8
+    "goals": 9
   },
   {
     "name": "Lionel Messi",
@@ -48,6 +48,11 @@
     "name": "Vinicius Junior",
     "team": "Brazil",
     "goals": 4
+  },
+  {
+    "name": "Bradley Barcola",
+    "team": "France",
+    "goals": 3
   },
   {
     "name": "Brian Brobbey",
@@ -97,11 +102,6 @@
   {
     "name": "Kai Havertz",
     "team": "Germany",
-    "goals": 3
-  },
-  {
-    "name": "Lautaro Martínez",
-    "team": "Argentina",
     "goals": 3
   },
   {
