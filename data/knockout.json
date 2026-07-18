@@ -397,7 +397,11 @@
       "kickoffUTC": "2026-07-18T21:00:00Z",
       "home": "France",
       "away": "England",
-      "status": "TIMED"
+      "status": "IN_PLAY",
+      "score": {
+        "h": 0,
+        "a": 2
+      }
     },
     {
       "apiId": 537390,
