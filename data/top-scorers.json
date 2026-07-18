@@ -2,7 +2,7 @@
   {
     "name": "Kylian Mbappé",
     "team": "France",
-    "goals": 9
+    "goals": 10
   },
   {
     "name": "Lionel Messi",
@@ -15,23 +15,23 @@
     "goals": 7
   },
   {
+    "name": "Jude Bellingham",
+    "team": "England",
+    "goals": 7
+  },
+  {
     "name": "Harry Kane",
     "team": "England",
     "goals": 6
   },
   {
-    "name": "Jude Bellingham",
-    "team": "England",
+    "name": "Ousmane Dembélé",
+    "team": "France",
     "goals": 6
   },
   {
     "name": "Mikel Oyarzabal",
     "team": "Spain",
-    "goals": 5
-  },
-  {
-    "name": "Ousmane Dembélé",
-    "team": "France",
     "goals": 5
   },
   {

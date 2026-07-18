@@ -397,10 +397,10 @@
       "kickoffUTC": "2026-07-18T21:00:00Z",
       "home": "France",
       "away": "England",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "score": {
-        "h": 2,
-        "a": 4
+        "h": 4,
+        "a": 6
       }
     },
     {
