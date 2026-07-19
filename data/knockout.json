@@ -410,7 +410,11 @@
       "kickoffUTC": "2026-07-19T19:00:00Z",
       "home": "Spain",
       "away": "Argentina",
-      "status": "TIMED"
+      "status": "LIVE",
+      "score": {
+        "h": 0,
+        "a": 0
+      }
     }
   ],
   "winner": null,
