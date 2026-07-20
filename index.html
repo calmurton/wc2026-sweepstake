@@ -242,6 +242,17 @@ body{background:radial-gradient(ellipse 70% 40% at 50% 0%,#0D1F3C 0%,var(--bg) 6
 
   </div>
 
+  </div>
+
+  <!-- COUNT ME IN CTA -->
+  <div class="cta-block">
+    <div class="cta-text">
+      <div class="cta-title">Want in?</div>
+      <div class="cta-sub">£10 returning · £20 new · £130 rollover pot already waiting</div>
+    </div>
+    <button class="cta-btn" id="cmiBtn">Count me in ↗</button>
+  </div>
+
   <!-- FOOTER -->
   <div class="footer">
     <div class="fl">LMS · 2026/27</div>
@@ -249,5 +260,173 @@ body{background:radial-gradient(ellipse 70% 40% at 50% 0%,#0D1F3C 0%,var(--bg) 6
   </div>
 
 </div>
+
+<!-- MODAL -->
+<div class="modal-back" id="modalBack">
+  <div class="modal">
+    <div class="modal-icon">⚽</div>
+    <h2 class="modal-title">Count me in</h2>
+    <p class="modal-sub">Enter your details and Callum will be in touch to confirm your spot.</p>
+
+    <form id="cmiForm" action="https://formspree.io/f/xdaqzggl" method="POST">
+      <div class="field">
+        <label for="fname">Your name</label>
+        <input type="text" id="fname" name="name" placeholder="e.g. Ben Hunter" required autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="femail">Your email <span class="optional">(optional)</span></label>
+        <input type="email" id="femail" name="email" placeholder="so Callum can reply to you" autocomplete="email">
+      </div>
+      <input type="hidden" name="returning" id="returningField" value="unknown">
+      <div class="field">
+        <label>Have you played before?</label>
+        <div class="toggle-row">
+          <button type="button" class="toggle-btn active" data-val="yes" id="togYes">Yes — returning (£10)</button>
+          <button type="button" class="toggle-btn" data-val="no" id="togNo">New player (£20)</button>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="mbtn mbtn-ghost" id="modalClose">Cancel</button>
+        <button type="submit" class="mbtn mbtn-cyan" id="submitBtn">Send request</button>
+      </div>
+    </form>
+
+    <div class="success-state" id="successState">
+      <div class="success-icon">✓</div>
+      <div class="success-title">You're on the list!</div>
+      <div class="success-sub">Callum will be in touch to confirm your spot and payment details.</div>
+      <button class="mbtn mbtn-cyan" id="successClose" style="margin-top:20px;width:100%">Close</button>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ── CTA BLOCK ── */
+.cta-block{
+  margin-top:36px;
+  background:linear-gradient(135deg,rgba(0,255,208,0.08) 0%,rgba(0,255,208,0.03) 100%);
+  border:1px solid rgba(0,255,208,0.25);border-radius:14px;
+  padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  margin-bottom:32px;
+}
+.cta-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.06em;color:var(--cyan);line-height:1;margin-bottom:4px}
+.cta-sub{font-size:12px;color:var(--muted)}
+.cta-btn{
+  background:var(--cyan);color:#050d15;border:none;
+  font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.1em;
+  padding:14px 28px;border-radius:10px;cursor:pointer;white-space:nowrap;
+  box-shadow:0 4px 20px rgba(0,255,208,0.3);transition:background 0.15s,transform 0.1s;
+  flex-shrink:0;
+}
+.cta-btn:hover{background:#00e6bb;transform:translateY(-1px)}
+.cta-btn:active{transform:translateY(0)}
+
+/* ── MODAL ── */
+.modal-back{
+  position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);
+  z-index:100;display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal-back.open{display:flex}
+.modal{
+  background:#0F1829;border:1px solid var(--border);border-radius:16px;
+  padding:32px;width:100%;max-width:420px;
+}
+.modal-icon{font-size:32px;margin-bottom:12px}
+.modal-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.06em;margin-bottom:6px}
+.modal-sub{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:24px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px}
+.field input{
+  width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text);
+  padding:11px 14px;font-size:14px;border-radius:8px;font-family:inherit;
+  transition:border-color 0.15s;
+}
+.field input:focus{outline:none;border-color:var(--cyan)}
+.field input::placeholder{color:var(--dim)}
+.optional{font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;color:var(--dim)}
+.toggle-row{display:flex;gap:8px}
+.toggle-btn{
+  flex:1;background:var(--surface-2);border:1px solid var(--border);color:var(--muted);
+  padding:9px 10px;font-size:12px;font-weight:600;border-radius:7px;cursor:pointer;
+  font-family:inherit;transition:all 0.15s;
+}
+.toggle-btn.active{background:rgba(0,255,208,0.1);border-color:rgba(0,255,208,0.4);color:var(--cyan)}
+.modal-actions{display:flex;gap:10px;margin-top:24px}
+.mbtn{
+  flex:1;padding:11px 16px;border-radius:8px;font-family:inherit;
+  font-size:13px;font-weight:600;cursor:pointer;border:1px solid var(--border);
+  transition:background 0.15s;
+}
+.mbtn-ghost{background:transparent;color:var(--muted)}
+.mbtn-ghost:hover{background:var(--surface-2)}
+.mbtn-cyan{background:var(--cyan);color:#050d15;border-color:var(--cyan)}
+.mbtn-cyan:hover{background:#00e6bb}
+.mbtn-cyan:disabled{opacity:0.5;cursor:not-allowed}
+
+/* ── SUCCESS STATE ── */
+.success-state{display:none;text-align:center;padding:8px 0}
+.success-icon{font-size:48px;color:var(--green);margin-bottom:12px;font-weight:700}
+.success-title{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.06em;margin-bottom:8px}
+.success-sub{font-size:13px;color:var(--muted);line-height:1.5}
+</style>
+
+<script>
+const btn   = document.getElementById('cmiBtn');
+const back  = document.getElementById('modalBack');
+const close = document.getElementById('modalClose');
+const form  = document.getElementById('cmiForm');
+const success = document.getElementById('successState');
+const submitBtn = document.getElementById('submitBtn');
+const togYes = document.getElementById('togYes');
+const togNo  = document.getElementById('togNo');
+const returningField = document.getElementById('returningField');
+
+btn.addEventListener('click', () => back.classList.add('open'));
+close.addEventListener('click', () => back.classList.remove('open'));
+document.getElementById('successClose').addEventListener('click', () => {
+  back.classList.remove('open');
+  // Reset form for next use
+  form.reset(); form.style.display=''; success.style.display='none';
+  togYes.classList.add('active'); togNo.classList.remove('active');
+  returningField.value = 'yes';
+});
+back.addEventListener('click', e => { if (e.target === back) back.classList.remove('open'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') back.classList.remove('open'); });
+
+// Returning toggle
+returningField.value = 'yes';
+togYes.addEventListener('click', () => {
+  togYes.classList.add('active'); togNo.classList.remove('active');
+  returningField.value = 'yes';
+});
+togNo.addEventListener('click', () => {
+  togNo.classList.add('active'); togYes.classList.remove('active');
+  returningField.value = 'no';
+});
+
+// Form submit via fetch (Formspree AJAX)
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      success.style.display = 'block';
+    } else {
+      alert('Something went wrong — please try again or message Callum directly.');
+      submitBtn.disabled = false; submitBtn.textContent = 'Send request';
+    }
+  } catch(err) {
+    alert('Could not send — check your connection and try again.');
+    submitBtn.disabled = false; submitBtn.textContent = 'Send request';
+  }
+});
+</script>
 </body>
 </html>
